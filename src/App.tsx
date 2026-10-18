@@ -4,6 +4,7 @@ import Intro from './components/Intro';
 import SurveyForm from './components/SurveyForm';
 import { Ineligible, ThankYou } from './components/EndScreens';
 import { captureRef, store } from './storage';
+import './index.css';
 
 type Stage = 'intro' | 'form' | 'ineligible' | 'done';
 
