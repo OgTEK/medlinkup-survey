@@ -1,6 +1,7 @@
 import React from 'react';
 import { Sparkles, Globe, Heart, Shield } from 'lucide-react';
 import { useScrollReveal } from '../utils/useScrollReveal';
+import Pragmatic from '../assets/images/connected_care_journey_1792157460091.jpg';
 
 export const WhereWeAreStarting: React.FC = () => {
   const containerRef = useScrollReveal<HTMLDivElement>('.starting-fade-up', 0.1);
@@ -63,7 +64,7 @@ export const WhereWeAreStarting: React.FC = () => {
           <div className="lg:col-span-5 starting-fade-up">
             <div className="rounded-lg overflow-hidden border border-stone-200 shadow-[0_4px_24px_rgba(0,0,0,0.04)] bg-white">
               <img
-                src="/src/assets/images/connected_care_journey_1792157460091.jpg"
+                src={Pragmatic}
                 alt="Pragmatic tools of connected care coordination and medical follow-up"
                 className="w-full h-auto object-cover aspect-[4/3]"
                 referrerPolicy="no-referrer"

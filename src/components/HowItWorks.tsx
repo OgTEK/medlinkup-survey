@@ -255,63 +255,40 @@ export const HowItWorks: React.FC = () => {
                   relative flex cursor-pointer flex-col overflow-hidden border-b border-white/10 p-8
                   transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]
                   last:border-0 lg:border-b-0 lg:border-r lg:p-10
-                  ${isExpanded ? 'lg:flex-[4.2]' : 'lg:flex-[1]'}
+                  ${isExpanded ? 'lg:flex' : 'lg:flex-[1]'}
                 `}
                 style={{ backgroundColor: step.color }}
               >
                 {/* Number + Arrows */}
-                <div className="z-10 flex shrink-0 items-center gap-4">
+                <div className="z-10 flex shrink-0 items-center gap-4 align-center">
                   <span
                     className={`
-                      flex h-11 w-11 shrink-0 items-center justify-center rounded-full border text-lg font-medium transition-colors duration-500
+                      flex h-8 w-8 items-center justify-center rounded-full border border-white/40 text-white transition-colors hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-30
                       ${isExpanded ? 'border-white text-white' : 'border-white/50 text-white/90'}
                     `}
                   >
                     {idx + 1}
                   </span>
+                  <h2 className="mb-8 text-4xl leading-tight text-white sm:text-4xl">
+                    {step.title}
+                  </h2>
 
-                  {isExpanded && (
-                    <div className="flex items-center gap-1.5">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveStep(Math.max(0, activeStep - 1));
-                        }}
-                        disabled={activeStep === 0}
-                        className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 text-white transition-colors hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-30"
-                      >
-                        <ChevronLeft className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveStep(Math.min(steps.length - 1, activeStep + 1));
-                        }}
-                        disabled={activeStep === steps.length - 1}
-                        className="flex h-8 w-8 items-center justify-center rounded-full border border-white/40 text-white transition-colors hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-30"
-                      >
-                        <ChevronRight className="h-4 w-4" />
-                      </button>
-                    </div>
-                  )}
                 </div>
 
                 {/* Expanded Content - All white text */}
                 <div
                   className={`
-                    mt-10 flex flex-col transition-all duration-500
+                    mt-12 ml-24 flex flex-col transition-all duration-500 h-[400px]
                     ${isExpanded
                       ? 'relative z-10 translate-y-0 opacity-100 delay-100'
                       : 'pointer-events-none absolute opacity-0'}
                   `}
                 >
-                  <h3 className="mb-3 font-serif text-3xl leading-tight text-white sm:text-4xl">
-                    {step.title}
-                  </h3>
-                  <p className="mb-8 text-[15px] font-medium text-white/80">
+
+                  <p className="mb-8 text-[24px] font-medium text-white">
                     {step.subtitle}
                   </p>
-                  <p className="max-w-md text-[15px] leading-relaxed text-white/90">
+                  <p className="max-w-md text-[20px] leading-relaxed text-white">
                     {step.description}
                   </p>
                 </div>

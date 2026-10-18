@@ -1,6 +1,8 @@
 import React from 'react';
 import { Quote } from 'lucide-react';
 import { useScrollReveal } from '../utils/useScrollReveal';
+import Founder from "../assets/images/founder_praise_portrait_1792157460184.jpg";
+
 
 export const FounderStory: React.FC = () => {
   const containerRef = useScrollReveal<HTMLDivElement>('.founder-fade-up', 0.1);
@@ -25,7 +27,7 @@ export const FounderStory: React.FC = () => {
           <div className="lg:col-span-5 founder-fade-up">
             <div className="rounded-lg overflow-hidden border border-stone-200 shadow-[0_4px_24px_rgba(0,0,0,0.04)] bg-white sticky top-28">
               <img
-                src="/src/assets/images/founder_praise_portrait_1792157460184.jpg"
+                src={Founder}
                 alt="Praise David-Oku, Founder of MedLinkup"
                 className="w-full h-auto object-cover aspect-[3/4]"
                 referrerPolicy="no-referrer"

@@ -60,32 +60,9 @@ export const OurApproach: React.FC = () => {
         </div>
 
         {/* Clinical Photo & Principles Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start mb-16">
-          {/* Left: Documentary Consultation Photograph */}
-          <div className="lg:col-span-5 order-2 lg:order-1">
-            <div className="rounded-lg overflow-hidden border border-stone-200 shadow-[0_4px_20px_rgba(0,0,0,0.05)] bg-white sticky top-28">
-              <img
-                src="/src/assets/images/clinical_doctor_consultation_1792157460450.jpg"
-                alt="Nigerian female physician providing attentive consultation in clinical office"
-                className="w-full h-auto object-cover aspect-[4/3]"
-                referrerPolicy="no-referrer"
-              />
-              <div className="p-5 border-t border-stone-100 bg-stone-50/50">
-                <span className="text-xs font-semibold text-stone-900 block mb-1">
-                  Continuity in Practice
-                </span>
-                <p className="text-xs text-stone-600 leading-relaxed">
-                  Building trust through unhurried clinical attention, shared medical context, and clear follow-through for every patient.
-                </p>
-              </div>
-            </div>
-          </div>
+        <div className="grid grid-cols-3 lg:grid-cols-3 gap-6 mb-1">
 
           {/* Right: The 3 Principles */}
-          <div className="lg:col-span-7 order-1 lg:order-2 space-y-6">
-            <div className="text-xs font-semibold text-stone-500 uppercase tracking-wider mb-2">
-              Three principles guide what we're building
-            </div>
 
             {principles.map((p, idx) => {
               const Icon = p.icon;
@@ -123,7 +100,6 @@ export const OurApproach: React.FC = () => {
                 </div>
               );
             })}
-          </div>
         </div>
       </div>
     </section>

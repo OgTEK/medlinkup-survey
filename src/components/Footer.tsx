@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import "../thirdway.css"; /* adjust the path to where the file actually is */
+import NigeriaWoman from "../assets/images/hero_care_nigerian_woman_1792157460231.jpg";
 
 /* ------------------------------------------------------------------ */
 /* EDIT THESE: use the same labels/destinations as your header         */
@@ -26,7 +27,7 @@ const LEGAL_LINKS: { label: string; to: string }[] = [
   { label: 'Terms of Use', to: '/terms' },            //       or remove them
 ];
 
-const DEFAULT_IMAGE = '/src/assets/images/hero_care_nigerian_woman_1792157460231.jpg';
+const DEFAULT_IMAGE = NigeriaWoman;
 /* ------------------------------------------------------------------ */
 
 const RULER_VARS =
@@ -135,7 +136,7 @@ export const Footer: React.FC<FooterProps> = ({ image = DEFAULT_IMAGE }) => {
       <div className="relative">
         <div className="relative h-[480px] w-full overflow-hidden md:h-[400px] lg:h-[606px]">
           <img
-            src={image}
+            src={NigeriaWoman}
             alt=""
             loading="lazy"
             referrerPolicy="no-referrer"
@@ -272,7 +273,7 @@ export const Footer: React.FC<FooterProps> = ({ image = DEFAULT_IMAGE }) => {
 
             {/* Copyright + development notice */}
             <div className="container mt-auto">
-              <div className="label flex flex-col gap-3 pt-5 pb-6 text-warm-white lg:flex-row lg:items-baseline lg:justify-between">
+              <div className="label flex flex-row gap-3 pt-5 pb-6 text-warm-white lg:flex-row lg:items-baseline lg:justify-between">
                 <p>© {new Date().getFullYear()} MedLinkup</p>
                 <p className="max-w-[60ch] opacity-70 lg:text-right">
                   MedLinkup is currently in development. Healthcare services are not yet available
