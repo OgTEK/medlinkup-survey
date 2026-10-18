@@ -151,6 +151,7 @@
 
     :root,
     :host {
+
         --font-sans: var(--font-sans), system-ui, sans-serif;
         --font-mono: var(--font-mono), monospace;
         --spacing: .25rem;
@@ -210,9 +211,9 @@
     }
 
     html,
-    : host {
-        -webkit-text-size-adjust: 100%;
-        tab-size: 4;
+    :host {
+        /* webkit-text-size-adjust: 100%; */
+        tab-size:4;
         line-height: 1.5;
         font-family: var(--default-font-family, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
         font-feature-settings: var(--default-font-feature-settings, normal);
@@ -226,7 +227,7 @@
         border-top-width: 1px
     }
 
-    abbr: where([title]) {
+    abbr:where([title]) {
         -webkit-text-decoration: underline dotted;
         text-decoration: underline dotted
     }
@@ -353,11 +354,11 @@
         border-radius: 0
     }
 
-    :where(select: is([multiple], [size])) optgroup {
+    :where(select:is([multiple], [size])) optgroup {
         font-weight: bolder
     }
 
-    :where(select: is([multiple], [size])) optgroup option {
+    :where(select:is([multiple], [size])) optgroup option {
         padding-inline-start: 20px
     }
 
@@ -447,7 +448,7 @@
     }
 
     button,
-    input: where([type=button], [type=reset], [type=submit]) {
+    input:where([type=button], [type=reset], [type=submit]) {
         appearance: button
     }
 
@@ -463,7 +464,7 @@
         height: auto
     }
 
-    [hidden]: where(:not([hidden=until-found])) {
+    [hidden]:where(:not([hidden=until-found])) {
         display: none !important
     }
 
@@ -570,7 +571,7 @@
         cursor: pointer
     }
 
-    button: disabled,
+    button:disabled,
     [role=button]:disabled {
         cursor: default
     }
