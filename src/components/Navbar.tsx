@@ -37,7 +37,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Outer Dock Wrapper to handle width changes */}
       <div
         data-menu-panel="true"
-        className={`h-[46px] pointer-events-auto overflow-hidden rounded-[4px] bg-white text-stone-900 border border-stone-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-all duration-300 ease-out ${
+        className={`h-[46px] pointer-events-auto overflow-hidden rounded-2xl bg-white text-stone-900 border border-stone-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-all duration-300 ease-out ${
           mobileMenuOpen
             ? "w-full max-w-sm h-auto"
             : "w-full max-w-[180px] lg:max-w-4xl h-11"
