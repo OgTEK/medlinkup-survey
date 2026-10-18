@@ -162,7 +162,7 @@ export default function App() {
         />
 
         {/* 10. Get Early Access */}
-        <EarlyAccessSection />
+        {/* <EarlyAccessSection /> */}
 
         {/* 11. Frequently Asked Questions */}
         <FAQSection
@@ -172,10 +172,10 @@ export default function App() {
 
       {/* 12. Footer */}
       <Footer
-        onOpenPrivacyNotice={() => setIsPrivacyNoticeOpen(true)}
-        onOpenResearch={() => navigateTo('survey', true)}
-        onOpenEarlyAccess={handleOpenEarlyAccess}
-        onOpenAdmin={() => navigateTo('admin', true)}
+        // onOpenPrivacyNotice={() => setIsPrivacyNoticeOpen(true)}
+        // onOpenResearch={() => navigateTo('survey', true)}
+        // onOpenEarlyAccess={handleOpenEarlyAccess}
+        // onOpenAdmin={() => navigateTo('admin', true)}
       />
 
       {/* Statutory Privacy Notice Modal */}

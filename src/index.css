@@ -199,6 +199,18 @@
     font-weight: inherit
   }
 
+  /* h2 {
+    --tw-leading: 1;
+    --tw-font-weight: var(--font-weight-medium);
+    line-height: 1;
+    font-weight: var(--font-weight-medium);
+    --tw-tracking: -.06em;
+    letter-spacing: -.06em;
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    text-box: trim-both cap alphabetic
+  } */
+
   a {
     color: inherit;
     -webkit-text-decoration: inherit;

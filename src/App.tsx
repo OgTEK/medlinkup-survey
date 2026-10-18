@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import Admin from './admin/Admin';
+import { useState } from 'react';
 import Intro from './components/Intro';
 import SurveyForm from './components/SurveyForm';
 import { Ineligible, ThankYou } from './components/EndScreens';
@@ -9,18 +8,9 @@ import './index.css';
 type Stage = 'intro' | 'form' | 'ineligible' | 'done';
 
 export default function App() {
-  const [path, setPath] = useState(window.location.pathname);
-  useEffect(() => {
-    const on = () => setPath(window.location.pathname);
-    window.addEventListener('popstate', on);
-    return () => window.removeEventListener('popstate', on);
-  }, []);
-
   const [ref] = useState(captureRef);
   const [code, setCode] = useState(() => store.get('mlu_done') ?? '');
   const [stage, setStage] = useState<Stage>(code ? 'done' : 'intro');
-
-  if (path.startsWith('/admin')) return <Admin />;
 
   return (
     <div className="shell">
