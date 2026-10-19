@@ -88,97 +88,70 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ onOpenPrivacyNotice }) =
       className="py-24 sm:py-32 bg-stone-50 border-b border-stone-200/60"
     >
       <div className="max-w-4xl mx-auto px-6 sm:px-8">
-        {/* Editorial Section Index */}
-        {/* <div className="flex items-center gap-3 mb-6 text-xs font-semibold tracking-widest text-teal-800 uppercase">
-          <span>11. Frequently Asked Questions</span>
-          <span className="w-8 h-px bg-stone-300"></span>
-          <span className="text-stone-500 font-normal">Common Inquiries</span>
-        </div> */}
-
         {/* Section Header */}
         <div className="faq-fade-up mb-10">
-          <h2 className="text-3xl sm:text-4xl font-light tracking-tight text-stone-900 leading-tight mb-4">
-            Answers to your questions about MedLinkup.
-          </h2>
-          <p className="text-base sm:text-lg text-stone-600 font-normal leading-relaxed">
-            Everything you need to know about our development stage, launch plans, data ethics, and clinical scope.
-          </p>
+          <h1 className="font-serif text-4xl leading-[1.05] tracking-tight text-[#0A0A0A] sm:text-5xl lg:col-span-6 lg:text-[56px] lg:leading-[0.95]">
+            Frequently asked questions
+          </h1>
         </div>
-
-        {/* Search Input */}
-        {/* <div className="faq-fade-up mb-10">
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
-              <Search className="w-4 h-4" />
-            </div>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search frequently asked questions (e.g. emergency, launch, privacy)..."
-              className="w-full pl-10 pr-4 py-3 bg-white border border-stone-300 rounded-md text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:border-teal-700 focus:ring-1 focus:ring-teal-700 transition-colors"
-            />
-          </div>
-        </div> */}
 
         {/* Accordion List */}
-<div className="faq-fade-up divide-y divide-stone-200 border-y border-stone-200">
-  {filteredFaqs.length === 0 ? (
-    <div className="py-12 text-center text-sm text-stone-500">
-      No matching questions found for "{searchQuery}". Try searching for another topic or email our team.
-    </div>
-  ) : (
-    filteredFaqs.map((faq, idx) => {
-      const isOpen = openIndex === idx;
-      return (
-        <div key={faq.id} className="py-5 sm:py-6">
-          <button
-            onClick={() => toggleAccordion(idx)}
-            className="group flex w-full cursor-pointer items-start justify-between gap-4 text-left focus:outline-none"
-            aria-expanded={isOpen}
-            aria-controls={`faq-answer-${faq.id}`}
-            id={`faq-question-${faq.id}`}
-          >
-            <span className="text-base font-medium leading-snug text-stone-900 transition-colors group-hover:text-teal-800 sm:text-lg">
-              {faq.q}
-            </span>
-            <span className="mt-0.5 shrink-0 rounded p-1 text-stone-400 group-hover:text-teal-700">
-              {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-            </span>
-          </button>
-
-          {/* Animated answer — always mounted, animates grid-rows + opacity */}
-          <div
-            id={`faq-answer-${faq.id}`}
-            role="region"
-            aria-labelledby={`faq-question-${faq.id}`}
-            className={`grid transition-all duration-300 ease-out ${
-              isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-            }`}
-          >
-            <div className="overflow-hidden">
-              <div className="mt-3 pr-8 text-sm leading-relaxed text-stone-600 sm:text-base">
-                <p>{faq.a}</p>
-                {faq.hasPrivacyLink && (
-                  <p className="mt-2">
-                    <button
-                      type="button"
-                      onClick={onOpenPrivacyNotice}
-                      className="inline-flex cursor-pointer items-center gap-1 font-medium text-teal-800 hover:underline"
-                    >
-                      <span>Review our complete research and health data privacy notice</span>
-                      <ArrowUpRight className="h-3.5 w-3.5" />
-                    </button>
-                  </p>
-                )}
-              </div>
+        <div className="faq-fade-up divide-y divide-stone-200 border-y border-stone-200">
+          {filteredFaqs.length === 0 ? (
+            <div className="py-12 text-center text-sm text-stone-500">
+              No matching questions found for "{searchQuery}". Try searching for another topic or email our team.
             </div>
-          </div>
+          ) : (
+            filteredFaqs.map((faq, idx) => {
+              const isOpen = openIndex === idx;
+              return (
+                <div key={faq.id} className="py-5 sm:py-6">
+                  <button
+                    onClick={() => toggleAccordion(idx)}
+                    className="group flex w-full cursor-pointer items-start justify-between gap-4 text-left focus:outline-none"
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${faq.id}`}
+                    id={`faq-question-${faq.id}`}
+                  >
+                    <h2 className="text-base font-medium leading-snug text-stone-900 transition-colors group-hover:text-teal-800 sm:text-lg">
+                      {faq.q}
+                    </h2>
+                    <span className="mt-0.5 shrink-0 rounded p-1 text-stone-400 group-hover:text-teal-700">
+                      {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                    </span>
+                  </button>
+
+                  {/* Animated answer — always mounted, animates grid-rows + opacity */}
+                  <div
+                    id={`faq-answer-${faq.id}`}
+                    role="region"
+                    aria-labelledby={`faq-question-${faq.id}`}
+                    className={`grid transition-all duration-300 ease-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                      }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="mt-3 pr-8 text-sm leading-relaxed text-stone-600 sm:text-base">
+                        <p>{faq.a}</p>
+                        {faq.hasPrivacyLink && (
+                          <p className="mt-2">
+                            <button
+                              type="button"
+                              onClick={onOpenPrivacyNotice}
+                              className="inline-flex cursor-pointer items-center gap-1 font-medium text-teal-800 hover:underline"
+                            >
+                              <span>Review our complete research and health data privacy notice</span>
+                              <ArrowUpRight className="h-3.5 w-3.5" />
+                            </button>
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          )}
         </div>
-      );
-    })
-  )}
-</div>
       </div>
     </section>
   );

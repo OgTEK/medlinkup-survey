@@ -18,18 +18,15 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({
     <section
       id="research"
       ref={containerRef}
-      className="py-24 sm:py-32 "
+      className="py-24 sm:py-32 bg-stone-50 "
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8">
-        {/* Editorial Section Index */}
-        {/* <div className="flex items-center gap-3 mb-6 text-xs font-semibold tracking-widest text-teal-800 uppercase">
-          <span>09. Research & Insights</span>
-          <span className="w-8 h-px bg-stone-300"></span>
-          <span className="text-stone-500 font-normal">Shape The Future of Care</span>
-        </div> */}
 
-        {/* Highlight Card with Pentagram Balance */}
-        <div className="research-fade-up bg-stone-900 text-white rounded-xl p-8 sm:p-14 border border-stone-800 shadow-[0_12px_40px_rgba(0,0,0,0.12)]">
+        <div className="research-fade-up text-white rounded-xl p-8 sm:p-14"
+        style={{
+          backgroundColor: 'var(--color-warm-black, #0F1515)',
+          color: 'var(--color-warm-white, #f6f3ee)',
+        }}>
           <div className="max-w-3xl mb-10">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-white leading-tight mb-6">
               Your healthcare experience matters.
