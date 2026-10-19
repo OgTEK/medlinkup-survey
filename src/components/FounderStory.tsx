@@ -1,7 +1,7 @@
 import React from 'react';
 import { Quote } from 'lucide-react';
 import { useScrollReveal } from '../utils/useScrollReveal';
-import Founder from "../assets/images/founder_praise_portrait_1792157460184.jpg";
+import Founder from "../assets/images/founder_praise_portrait_1792157460184.png";
 
 
 export const FounderStory: React.FC = () => {
