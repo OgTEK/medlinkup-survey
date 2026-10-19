@@ -142,7 +142,7 @@ export default function App() {
         <OurApproach />
 
         {/* 04. One Visit or Ongoing Support */}
-        <CarePathways />
+        {/* <CarePathways /> */}
 
         {/* 05. Where We're Starting */}
         <WhereWeAreStarting />

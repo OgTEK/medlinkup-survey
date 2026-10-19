@@ -291,69 +291,6 @@ export const TheProblem: React.FC = () => {
       )}
 
       {/* ---------- The core insight (light) ---------- */}
-      <div className="bg-stone-100/60 py-16 sm:py-24">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8">
-          <div className="problem-fade-up max-w-4xl bg-white p-8 sm:p-10 rounded-lg border border-stone-200 shadow-xs">
-            <div className="space-y-4 text-base sm:text-lg text-stone-700 font-normal leading-relaxed">
-              <p>
-                And sometimes the challenge begins even earlier, when you're trying to find the right healthcare professional in the first place.
-              </p>
-              <p>
-                Healthcare can involve different professionals, appointments, tests and decisions. Yet patients are often left to connect all those pieces themselves.
-              </p>
-              <p className="text-xl sm:text-2xl font-light text-stone-900 pt-2 leading-snug border-t border-stone-100">
-                Getting the care you need shouldn't mean figuring everything out alone.
-              </p>
-              <p className="text-teal-800 font-medium text-base pt-1">
-                That's the problem we're working to solve.
-              </p>
-            </div>
-
-            {/* Clean Before / After Journey Comparison */}
-            <div className="mt-8 pt-8 border-t border-stone-100 grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-stone-50 p-5 rounded-md border border-stone-200/70">
-                <span className="text-xs font-semibold uppercase tracking-wider text-stone-500 block mb-3">
-                  The Disconnected Reality Today
-                </span>
-                <ul className="space-y-2 text-xs text-stone-600">
-                  <li className="flex items-start gap-2">
-                    <span className="text-stone-400 font-mono">1.</span> Isolated doctor consultation
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-stone-400 font-mono">2.</span> Patient left to hunt for labs & diagnostic scan centres
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-stone-400 font-mono">3.</span> Unexplained scan reports & guessing next steps
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-stone-400 font-mono">4.</span> Starting from zero with new specialist
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-teal-50/60 p-5 rounded-md border border-teal-200/70">
-                <span className="text-xs font-semibold uppercase tracking-wider text-teal-800 block mb-3">
-                  The MedLinkup Connected Continuity
-                </span>
-                <ul className="space-y-2 text-xs text-teal-900">
-                  <li className="flex items-start gap-2">
-                    <span className="text-teal-600 font-mono">1.</span> Matched with vetted healthcare professionals
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-teal-600 font-mono">2.</span> Clear care programmes coordinating scans & specialist referrals
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-teal-600 font-mono">3.</span> Shared clinical context with your permission
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-teal-600 font-mono">4.</span> Proactive reminders, follow-ups & integrated mental health
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
   );
 };
