@@ -9,6 +9,7 @@ import {
 } from '../survey/questions';
 import { submitResponse } from '../lib/api';
 import { deviceId, store } from '../lib/storage';
+import '../styles_.css'
 
 interface Props {
   onIneligible: () => void;

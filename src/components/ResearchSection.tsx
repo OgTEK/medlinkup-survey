@@ -20,13 +20,13 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({
       ref={containerRef}
       className="py-24 sm:py-32 bg-stone-50 "
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 --color-warm-black">
 
         <div className="research-fade-up text-white rounded-xl p-8 sm:p-14"
-        style={{
-          backgroundColor: 'var(--color-warm-black, #0F1515)',
-          color: 'var(--color-warm-white, #f6f3ee)',
-        }}>
+          style={{
+            backgroundColor: 'var(--color-warm-black, #0F1515)',
+            color: 'var(--color-warm-white, #f6f3ee)',
+          }}>
           <div className="max-w-3xl mb-10">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-white leading-tight mb-6">
               Your healthcare experience matters.
@@ -43,7 +43,7 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({
           </div>
 
           {/* Action Row */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-6 pt-6 border-t border-stone-800 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-6 pt-4">
             <PillButton
               label="Get Early Access"
               variant="primary"
@@ -51,7 +51,7 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({
             />
 
             <div className="flex items-center gap-2 text-xs text-stone-400">
-              <Clock className="w-4 h-4 text-teal-400" />
+              <Clock className="w-4 h-4 text-teal-400 items-start" />
               <span>Takes about 7 to 10 minutes</span>
             </div>
           </div>
@@ -60,14 +60,13 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({
           <div className="pt-6 border-t border-stone-800/80 text-xs text-stone-400 leading-relaxed max-w-2xl">
             <p>
               Participation is voluntary. You do not need to provide your medical history to participate.{' '}
-              Please review our{' '}
-              <button
+              Please review our <button
                 type="button"
                 onClick={onOpenPrivacyNotice}
                 className="text-teal-400 hover:text-teal-300 underline underline-offset-2 cursor-pointer"
               >
                 research privacy notice
-              </button>{' '}
+              </button>
               before submitting your responses.
             </p>
           </div>

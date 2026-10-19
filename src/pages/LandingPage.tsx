@@ -9,8 +9,7 @@ import { Hero } from '../components/Hero.tsx';
 import { TheProblem } from '../components/TheProblem.tsx';
 import { OurApproach } from '../components/OurApproach.tsx';
 import { CarePathways } from '../components/CarePathways.tsx';
-import { WhereWeAreStarting } from '../components/WhereWeAreStarting.tsx';
-import { HowItWorks } from '../components/HowItWorks.tsx';
+import  WhereWeAreStarting  from '../components/WhereWeAreStarting.tsx';
 import { CareAndTrust } from '../components/CareAndTrust.tsx';
 import { FounderStory } from '../components/FounderStory.tsx';
 import { ResearchSection } from '../components/ResearchSection.tsx';
@@ -23,6 +22,8 @@ import Admin from './Admin.tsx';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Import } from 'lucide-react';
+import CardsTeamSection from '../components/CardsTeamSection.tsx';
+import JournalSection from '../components/JournalSelection.tsx';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -132,6 +133,8 @@ export default function App() {
           onOpenResearch={() => navigateTo('survey', true)}
         />
 
+        <CardsTeamSection />
+
         {/* 02. The Problem */}
         <TheProblem />
 
@@ -145,7 +148,9 @@ export default function App() {
         <WhereWeAreStarting />
 
         {/* 06. How MedLinkup Will Work */}
-        <HowItWorks />
+        {/* <HowItWorks /> */}
+
+        <JournalSection />
 
         {/* 07. Building With Care and Trust */}
         <CareAndTrust
