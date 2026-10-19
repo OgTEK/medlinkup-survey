@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "../thirdway.css";
 import NigeriaWoman from "../assets/images/hero_care_nigerian_woman_1792157460231.jpg";
 import { EarlyAccessModal } from "../components/EarlyAccessModal";
+import { PillButton } from "./ui/PillButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -275,13 +276,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEarlyAccess }) => {
       {/* Headline pane */}
       <div className="hero-pane pointer-events-none absolute inset-x-0 top-0 z-10 flex h-[55svh] items-end">
         <div className="relative container w-full px-[clamp(16px,4vw,32px)] pb-[clamp(32px,6vh,72px)]">
-          <h1
+          <span
             className="mb-6 inline-block cap-trim font-sans font-medium tracking-[-0.04em] whitespace-pre-line text-warm-white leading-[0.92] xl:leading-[0.9] [--split-sentence-gap:10px]"
             style={{ fontSize: "clamp(44px, 24px + 5.4vw, 100px)" }}
             aria-label="Healthcare shouldn’t end at the appointment."
           >
             {HEADLINE_LINES.map((line, i) => (
-              <span
+              <h1
                 key={line}
                 className="split-line"
                 aria-hidden="true"
@@ -291,9 +292,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEarlyAccess }) => {
                   textAlign: "start",
                   ...(i > 0
                     ? {
-                        translate:
-                          "0 calc(1 * var(--split-sentence-gap, 0px))",
-                      }
+                      translate:
+                        "0 calc(1 * var(--split-sentence-gap, 0px))",
+                    }
                     : {}),
                 }}
               >
@@ -307,9 +308,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEarlyAccess }) => {
                     </React.Fragment>
                   ))}
                 </span>
-              </span>
+              </h1>
             ))}
-          </h1>
+          </span>
 
           <div className="py-12">
             <p className="hero-sub body cap-trim mt-6 max-w-[36ch] text-warm-white leading-relaxed">
@@ -339,14 +340,21 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEarlyAccess }) => {
               ref={ctaRef}
               className="hero-reveal flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-10 py-12"
             >
-              <PillCta
+
+              <div className="group inline-flex items-center gap-2.5 transition-colors duration-500 text-warm-white"> 
+              <PillButton
                 label="Get Early Access"
+                variant="primary"
                 onClick={handleOpenEarlyAccess}
               />
-              <PillCta
+
+              <PillButton
                 label="Help shape MedLinkup. Join our research."
+                variant="outline"
                 to="/survey"
               />
+              </div>
+              
             </div>
           </div>
         </div>

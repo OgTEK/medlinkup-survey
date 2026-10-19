@@ -1,0 +1,127 @@
+.pill-button {
+  --pill-bg: #ffffff;
+  --pill-text: #111111;
+  --pill-border: #111111;
+  --pill-hover-bg: #111111;
+  --pill-hover-text: #ffffff;
+
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  padding: 14px 26px;
+  border: 1px solid var(--pill-border);
+  border-radius: 9999px;
+
+  background: var(--pill-bg);
+  color: var(--pill-text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+
+  transition:
+    color 0.35s ease,
+    border-color 0.35s ease,
+    background-color 0.35s ease;
+}
+
+.pill-button__label {
+  position: relative;
+  z-index: 1;
+}
+
+.pill-button__wipe {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: var(--pill-hover-bg);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.pill-button:hover .pill-button__wipe,
+.pill-button:focus-visible .pill-button__wipe {
+  transform: scaleX(1);
+}
+
+.pill-button:hover,
+.pill-button:focus-visible {
+  color: var(--pill-hover-text);
+  border-color: var(--pill-hover-bg);
+}
+
+.pill-button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+.pill-button:active {
+  transform: scale(0.98);
+}
+
+.pill-button:disabled,
+.pill-button[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pill-button:disabled {
+  transform: none;
+}
+
+/* Primary: solid button with contrasting wipe */
+.pill-button--primary {
+  --pill-bg: #009689;
+  --pill-text: #ffffff;
+  --pill-border: #009689;
+  --pill-hover-bg: #ffffff;
+  --pill-hover-text: #009689;
+}
+
+/* Outline: transparent with a dark wipe */
+.pill-button--outline {
+  --pill-bg: transparent;
+  --pill-text: #ffffff;
+  --pill-border: #ffffff;
+  --pill-hover-bg: #009689;
+  --pill-hover-text: #ffffff;
+}
+
+/* Dark: dark surface with a light wipe */
+.pill-button--dark {
+  --pill-bg: #009689;
+  --pill-text: #ffffff;
+  --pill-border: #009689;
+  --pill-hover-bg: #ffffff;
+  --pill-hover-text: #009689;
+}
+
+/* Light: white surface with a dark wipe */
+.pill-button--light {
+  --pill-bg: #ffffff;
+  --pill-text: #009689;
+  --pill-border: #ffffff;
+  --pill-hover-bg: #e8e8e8;
+  --pill-hover-text: #009689;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill-button,
+  .pill-button__wipe {
+    transition: none;
+  }
+
+  .pill-button:active {
+    transform: none;
+  }
+}

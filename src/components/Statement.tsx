@@ -21,8 +21,8 @@ const sectionStyle = {
 } as React.CSSProperties;
 
 export const Statement: React.FC<StatementProps> = ({
-  title = 'Care that follows you.',
-  subtitle = 'Helping women in Nigeria find the right doctor, understand their next steps and stay supported throughout their care.',
+  title = 'Finding care is only the beginning.',
+  subtitle = 'You leave a consultation with a scan request and a referral. Then the questions begin.'
 }) => {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -53,7 +53,7 @@ export const Statement: React.FC<StatementProps> = ({
         <div className="col-span-full">
           <div className="flex flex-col items-center justify-center">
             <div className="statement-reveal visibility: inherit; translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
-              <h2 className="mb-5 w-full max-w-[1600px] text-center h3 lg:mb-6 xl:mb-10">{title}</h2>
+              <span className="mb-5 w-full max-w-[1600px] text-center h3 lg:mb-6 xl:mb-10">{title}</span>
             </div>
             <div className="statement-reveal" style={{ visibility: 'inherit', transform: 'translate(0px, 0px)', opacity: 1 }}>
               <h3 className="w-full max-w-[1200px] px-2 text-center marist-h4">{subtitle}</h3>

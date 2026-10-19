@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { EarlyAccessModal } from "./EarlyAccessModal";
+import { PillButton } from "./ui/PillButton";
 
 interface NavbarProps {
   onOpenEarlyAccess: () => void;
@@ -13,167 +14,193 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  // const [contactOpen, setContactOpen] = useState(false);
   const [earlyAccessOpen, setEarlyAccessOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 24);
     };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
+
     const element = document.getElementById(id);
+
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 transition-all duration-300 h-48px">
-      {/* Outer Dock Wrapper to handle width changes */}
+    <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 transition-all duration-300">
       <div
         data-menu-panel="true"
-        className={`h-[46px] pointer-events-auto overflow-hidden rounded-2xl bg-white text-stone-900 border border-stone-200/60 shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-all duration-300 ease-out ${
+        className={`pointer-events-auto overflow-hidden border border-stone-200/80 bg-white text-stone-900 shadow-[0_4px_24px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out ${
           mobileMenuOpen
-            ? "w-full max-w-sm h-auto"
-            : "w-full max-w-[180px] lg:max-w-4xl h-11"
+            ? "h-auto w-full max-w-md rounded-2xl"
+            : "h-14 w-full max-w-6xl rounded-full"
         }`}
       >
-        {/* Main Nav Bar Content */}
-        <div className="flex h-11 shrink-0 items-center justify-between pl-4 pr-2">
-          {/* Zone 1: Logo Wordmark Match */}
+        {/* Main Navbar Content */}
+        <div className="flex h-14 shrink-0 items-center justify-between gap-4 px-5">
+          {/* Logo */}
           <a
             href="#"
-            aria-label="MedLinkup — home"
-            className="relative inline-flex shrink-0 items-center py-[2px] text-stone-900 font-semibold tracking-tight text-sm select-none group"
+            aria-label="MedLinkup home"
+            className="group relative inline-flex shrink-0 select-none items-center text-sm font-semibold tracking-tight text-stone-900"
           >
             <span>MedLinkup</span>
-            <span className="w-1 h-1 ml-0.5 rounded-full bg-teal-600 inline-block transition-transform duration-200 group-hover:scale-125"></span>
+            <span className="ml-0.5 inline-block h-1 w-1 rounded-full bg-teal-600 transition-transform duration-200 group-hover:scale-125" />
           </a>
 
-          {/* Zone 2: Navigation Links (Desktop - Expanded Context) */}
-          <nav className="hidden lg:flex items-center gap-6 text-[13px] font-medium text-stone-500">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden items-center gap-6 text-[13px] font-medium text-stone-500 lg:flex">
             <button
+              type="button"
               onClick={() => scrollToSection("why-medlinkup")}
-              className="hover:text-stone-900 transition-colors py-1 cursor-pointer"
+              className="cursor-pointer whitespace-nowrap py-1 transition-colors hover:text-stone-900"
             >
               Why Us
             </button>
+
             <button
+              type="button"
               onClick={() => scrollToSection("our-approach")}
-              className="hover:text-stone-900 transition-colors py-1 cursor-pointer"
+              className="cursor-pointer whitespace-nowrap py-1 transition-colors hover:text-stone-900"
             >
               Approach
             </button>
+
             <button
+              type="button"
               onClick={() => scrollToSection("how-it-works")}
-              className="hover:text-stone-900 transition-colors py-1 cursor-pointer"
+              className="cursor-pointer whitespace-nowrap py-1 transition-colors hover:text-stone-900"
             >
               Process
             </button>
+
             <button
+              type="button"
               onClick={() => scrollToSection("our-story")}
-              className="hover:text-stone-900 transition-colors py-1 cursor-pointer"
+              className="cursor-pointer whitespace-nowrap py-1 transition-colors hover:text-stone-900"
             >
               Story
             </button>
+
             <button
+              type="button"
               onClick={onOpenResearch}
-              className="hover:text-teal-700 transition-colors py-1 flex items-center gap-0.5 text-teal-600 font-medium"
+              className="flex items-center gap-0.5 whitespace-nowrap py-1 font-medium text-teal-600 transition-colors hover:text-teal-700"
             >
               <span>Research</span>
-              <ArrowUpRight className="w-3 h-3 opacity-80" />
+              <ArrowUpRight className="h-3 w-3 opacity-80" />
             </button>
           </nav>
 
-          {/* Zone 3: CTA & Mobile Trigger */}
-          <div className="flex items-center gap-2 shrink-0">
-            <button
-              onClick={() => setEarlyAccessOpen(true)}
-              // onClick={() => setContactOpen(true)}
+          {/* Desktop CTA and Mobile Menu Toggle */}
+          <div className="flex shrink-0 items-center gap-3">
+            <div className="hidden lg:block">
+              <PillButton
+                label="Get Early Access"
+                variant="primary"
+                onClick={() => setEarlyAccessOpen(true)}
+              />
+            </div>
 
-              className=" lg:inline-flex items-center justify-center h-7 px-3 text-[11px] font-medium tracking-wide text-white bg-teal-700 hover:bg-teal-800 rounded-[3px] transition-colors shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-600"
-            >
-              Get Early Access
-            </button>
-            {/* <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} /> */}
-            <EarlyAccessModal
-              open={earlyAccessOpen}
-              onClose={() => setEarlyAccessOpen(false)}
-            />
-
-            {/* Mobile menu toggle action */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-1.5 text-stone-500 hover:text-stone-900 focus:outline-none transition-colors"
-              aria-label="Toggle Navigation Menu"
+              className="rounded-full p-2 text-stone-500 transition-colors hover:bg-stone-100 hover:text-stone-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 lg:hidden"
+              aria-label={
+                mobileMenuOpen
+                  ? "Close navigation menu"
+                  : "Open navigation menu"
+              }
               aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? (
-                <X className="w-4 h-4" />
+                <X className="h-5 w-5" />
               ) : (
-                <Menu className="w-4 h-4" />
+                <Menu className="h-5 w-5" />
               )}
             </button>
           </div>
         </div>
 
-        {/* Mobile Dropdown Internal Content */}
+        {/* Mobile Dropdown */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-stone-100 bg-white px-4 py-4 animate-in fade-in slide-in-from-top-2 duration-200">
-            <div className="flex flex-col gap-3 text-xs font-medium text-stone-600">
+          <div className="animate-in fade-in slide-in-from-top-2 border-t border-stone-100 bg-white px-5 py-5 duration-200 lg:hidden">
+            <nav className="flex flex-col gap-3 text-sm font-medium text-stone-600">
               <button
+                type="button"
                 onClick={() => scrollToSection("why-medlinkup")}
-                className="text-left py-1.5 hover:text-stone-900 transition-colors"
+                className="py-2 text-left transition-colors hover:text-stone-900"
               >
                 Why MedLinkup
               </button>
+
               <button
+                type="button"
                 onClick={() => scrollToSection("our-approach")}
-                className="text-left py-1.5 hover:text-stone-900 transition-colors"
+                className="py-2 text-left transition-colors hover:text-stone-900"
               >
                 Our Approach
               </button>
+
               <button
+                type="button"
                 onClick={() => scrollToSection("how-it-works")}
-                className="text-left py-1.5 hover:text-stone-900 transition-colors"
+                className="py-2 text-left transition-colors hover:text-stone-900"
               >
                 How It Works
               </button>
+
               <button
+                type="button"
                 onClick={() => scrollToSection("our-story")}
-                className="text-left py-1.5 hover:text-stone-900 transition-colors"
+                className="py-2 text-left transition-colors hover:text-stone-900"
               >
                 Our Story
               </button>
+
               <button
+                type="button"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onOpenResearch();
                 }}
-                className="text-left py-1.5 text-teal-600 font-semibold flex items-center justify-between"
+                className="flex items-center justify-between py-2 font-semibold text-teal-600 transition-colors hover:text-teal-700"
               >
                 <span>Research Survey</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                <ArrowUpRight className="h-4 w-4" />
               </button>
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenEarlyAccess();
-                }}
-                className="mt-1 w-full h-9 flex items-center justify-center text-center text-xs font-medium text-white bg-teal-700 hover:bg-teal-800 rounded-[3px] shadow-sm transition-colors"
-              >
-                Get Early Access
-              </button>
-            </div>
+
+              <div className="mt-2">
+                <PillButton
+                  label="Get Early Access"
+                  variant="primary"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenEarlyAccess();
+                  }}
+                  className="w-full"
+                />
+              </div>
+            </nav>
           </div>
         )}
       </div>
+
+      {/* Early Access Modal */}
+      <EarlyAccessModal
+        open={earlyAccessOpen}
+        onClose={() => setEarlyAccessOpen(false)}
+      />
     </header>
   );
 };

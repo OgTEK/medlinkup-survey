@@ -70,7 +70,7 @@ const Ruler: React.FC<{ className?: string }> = ({ className = '' }) => (
 /** Rotated MedLinkup wordmark */
 const Wordmark: React.FC = () => (
   <div className="flex h-[319px] w-[120px] shrink-0 items-center justify-center text-warm-white lg:h-[585px] lg:w-28">
-    <div className="flex-none -rotate-90">
+    <div className="flex-none">
       <span className="block whitespace-nowrap font-sans text-[56px] leading-none font-medium tracking-[-0.06em] lg:text-[104px]">
         MedLinkup
       </span>
