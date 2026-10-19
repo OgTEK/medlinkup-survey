@@ -13,7 +13,7 @@ const SECTION_TITLE = "How MedLinkup will work";
 const VIEW_ALL = { label: "View all", href: "/journal" };
 
 type Post = {
-    href: string;
+    // href: string;
     title: string;
     description: string;
     /** ISO date: YYYY-MM-DD */
@@ -33,7 +33,7 @@ type Post = {
 
 const POSTS: Post[] = [
     {
-        href: "/journal/behind-the-build-education-at-thirdway",
+        // href: "/journal/behind-the-build-education-at-thirdway",
         title: "Tell us what you need.",
         description: 'Start with a guided check-in about your health concerns and goals, or go straight to requesting an individual consultation.',
         number: "01",
@@ -46,7 +46,7 @@ const POSTS: Post[] = [
             "(max-width: 768px) 343px, (max-width: 1024px) 458px, (max-width: 1280px) 572px, (max-width: 1350px) 604px, (max-width: 1441px) 644px, 859px",
     },
     {
-        href: "/journal/behind-the-build-the-campus-in-the-sky",
+        // href: "/journal/behind-the-build-the-campus-in-the-sky",
         title: "Explore your care options",
         description: 'Start with a guided check-in about your health concerns and goals, or go straight to requesting an individual consultation.',
 
@@ -59,7 +59,7 @@ const POSTS: Post[] = [
             "(max-width: 768px) 169px, (max-width: 1024px) 225px, (max-width: 1280px) 281px, (max-width: 1350px) 296px, (max-width: 1441px) 316px, 421px",
     },
     {
-        href: "/journal/behind-the-build-meet-abi-munslow",
+        // href: "/journal/behind-the-build-meet-abi-munslow",
         title: "Stay connected to your care",
         description: 'Keep track of appointments, relevant records, recommended next steps and follow-up, with ongoing support when your needs call for it.',
 
@@ -150,7 +150,7 @@ function PostCard({ post, sizes }: { post: Post; sizes: string }) {
     return (
         <a
             className={`group flex h-full flex-col gap-[16px] rounded-[4px] bg-warm-black/4 px-[8px] pt-[8px] pb-[24px] transition-colors duration-700 ${EASE} lg:pb-[32px] ${post.hoverClass}`}
-            href={post.href}
+            
         >
             <div className="relative aspect-[3/2] w-full overflow-hidden rounded-[2px] bg-warm-black/6">
                 <div
@@ -274,7 +274,7 @@ export default function JournalSection() {
                     {/* Desktop grid */}
                     <div className="mt-[32px] hidden gap-[16px] lg:mt-[64px] lg:grid lg:grid-cols-12 xl:grid-cols-24 xl:items-start">
                         {POSTS.map((post) => (
-                            <div key={post.href} className={post.desktopSpan}>
+                            <div className={post.desktopSpan}>
                                 <PostCard post={post} sizes={post.desktopSizes} />
                             </div>
                         ))}
@@ -295,7 +295,7 @@ export default function JournalSection() {
                             onReachEnd={syncState}
                         >
                             {POSTS.map((post) => (
-                                <SwiperSlide key={post.href} className="!h-auto">
+                                <SwiperSlide  className="!h-auto">
                                     <PostCard post={post} sizes={MOBILE_SIZES} />
                                 </SwiperSlide>
                             ))}
