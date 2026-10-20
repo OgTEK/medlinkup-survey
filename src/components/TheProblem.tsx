@@ -27,14 +27,14 @@ const patientQuestions: PatientQuestion[] = [
   },
   {
     q: "Your care shouldn't start over at every appointment.",
-    detail: 'Navigating dense radiology reports without clinical jargon leaving you anxious.',
+    detail: "When your care involves different professionals or several visits, it should stay connected. MedLinkup helps you coordinate appointments, referrals and ongoing care without losing track of what has happened before.",
     tag: 'Understanding',
     bg: 'radial-gradient(120% 120% at 80% 20%, #2a6f66 0%, #123c3a 50%, #0b1c1b 100%)',
     image: 'https://images.unsplash.com/photo-1758691461990-03b49d969495?q=80&w=3840&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
   },
   {
     q: 'Your health story matters',
-    detail: 'Navigating dense radiology reports without clinical jargon leaving you anxious.',
+    detail: "Your concerns, previous consultations and care decisions all add up to a bigger picture. MedLinkup brings relevant health information together, so you and your healthcare professionals can make better-informed decisions. Nothing from your medical history is shared without your permission.",
     tag: 'Understanding',
     bg: 'radial-gradient(120% 120% at 80% 20%, #2a6f66 0%, #123c3a 50%, #0b1c1b 100%)',
     image: 'https://images.unsplash.com/photo-1758691461990-03b49d969495?q=80&w=3840&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
