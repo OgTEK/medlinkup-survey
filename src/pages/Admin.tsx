@@ -5,6 +5,7 @@ import type { AdminPayload } from '../survey/types';
 import { disqualify, fetchAdmin } from '../lib/api';
 import { tally } from '../lib/analysis';
 import { exportExcel } from '../lib/exportExcel';
+import '../styles/admin.css'; // adjust the path to where admin.css lives
 
 const KEY = 'ml_admin_pw';
 const read = () => {
@@ -50,9 +51,10 @@ export default function Admin() {
 
   if (!data)
     return (
-      <div className="shell">
-        <main className="card narrow">
-          <h1 className="h2">Admin</h1>
+      <div className="admin-app">
+        <div className="shell narrow">
+          <main className="card">
+            <h1>Admin</h1>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -68,7 +70,8 @@ export default function Admin() {
               {loading ? 'Checking…' : 'Sign in'}
             </button>
           </form>
-        </main>
+          </main>
+        </div>
       </div>
     );
 
@@ -85,15 +88,16 @@ export default function Admin() {
   };
 
   return (
+    <div className="admin-app">
     <div className="shell wide">
       <header className="admin-head">
         <div>
-          <h1 className="h2">Survey results</h1>
-          <p className="hint">
+          <h1>Survey results</h1>
+          <p className="muted small">
             Stored in <b>{data.storage === 'notion' ? 'Notion' : 'a local file (data/responses.json)'}</b>
           </p>
         </div>
-        <div className="actions">
+        <div className="row">
           <button className="btn" onClick={() => load(pw)} disabled={loading}>
             {loading ? 'Refreshing…' : 'Refresh'}
           </button>
@@ -103,7 +107,7 @@ export default function Admin() {
         </div>
       </header>
 
-      <div className="stats">
+      <div className="kpis">
         <Stat label="Responses" value={data.responses.length} />
         <Stat label="Referred responses" value={data.responses.filter((r) => r.referredBy).length} />
         <Stat label="Valid referrals" value={validTotal} />
@@ -131,6 +135,7 @@ export default function Admin() {
         />
       )}
     </div>
+    </div>
   );
 }
 
@@ -138,8 +143,8 @@ const avgMinutes = (secs: number[]) => (secs.length ? (secs.reduce((a, b) => a +
 
 function Stat({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="stat">
-      <b>{value}</b>
+    <div className="kpi">
+      <strong>{value}</strong>
       <span>{label}</span>
     </div>
   );
@@ -152,11 +157,13 @@ function BarChart({ q, data }: { q: Question; data: AdminPayload }) {
   const t = useMemo(() => tally(data.responses, q), [data, q]);
   useEffect(() => {
     if (!ref.current) return;
+    // use the theme colour from admin.css (--teal) instead of a hard-coded hex
+    const color = getComputedStyle(ref.current).getPropertyValue('--teal').trim() || '#244A7C';
     const chart = new Chart(ref.current, {
       type: 'bar',
       data: {
         labels: t.rows.map((r) => r.option),
-        datasets: [{ data: t.rows.map((r) => r.count), backgroundColor: '#0f766e', borderRadius: 3 }],
+        datasets: [{ data: t.rows.map((r) => r.count), backgroundColor: color, borderRadius: 3 }],
       },
       options: {
         indexAxis: 'y',
@@ -168,11 +175,11 @@ function BarChart({ q, data }: { q: Question; data: AdminPayload }) {
     return () => chart.destroy();
   }, [t]);
   return (
-    <section className="chart-card">
+    <section className="card">
       <h3>
         Q{qNumber(q)}. {q.text}
       </h3>
-      <p className="hint">{t.n} answered</p>
+      <p className="muted small">{t.n} answered</p>
       <div style={{ height: 40 + t.rows.length * 30 }}>
         <canvas ref={ref} />
       </div>
@@ -182,17 +189,17 @@ function BarChart({ q, data }: { q: Question; data: AdminPayload }) {
 
 function Overview({ data }: { data: AdminPayload }) {
   const open = data.responses.filter((r) => typeof r.answers.q23 === 'string');
-  if (!data.responses.length) return <p className="empty">No responses yet.</p>;
+  if (!data.responses.length) return <p className="muted center">No responses yet.</p>;
   return (
     <>
-      <div className="charts">
+      <div className="chart-grid">
         {QUESTIONS.filter((q) => q.type !== 'text' && q.id !== 'q1').map((q) => (
           <BarChart key={q.id} q={q} data={data} />
         ))}
       </div>
-      <section className="chart-card">
+      <section className="card" style={{ marginTop: 16 }}>
         <h3>Q23. In their own words ({open.length})</h3>
-        <ul className="quotes">
+        <ul className="comments">
           {open.map((r) => (
             <li key={r.id}>“{r.answers.q23 as string}”</li>
           ))}
@@ -205,7 +212,7 @@ function Overview({ data }: { data: AdminPayload }) {
 /* ───────── Referrals ───────── */
 
 function Referrals({ data }: { data: AdminPayload }) {
-  if (!data.leaderboard.length) return <p className="empty">No referrals yet.</p>;
+  if (!data.leaderboard.length) return <p className="muted center">No referrals yet.</p>;
   return (
     <div className="table-wrap">
       <table>
@@ -220,12 +227,12 @@ function Referrals({ data }: { data: AdminPayload }) {
         </thead>
         <tbody>
           {data.leaderboard.map((l) => (
-            <tr key={l.refCode} className={l.rank === 1 ? 'top' : ''}>
+            <tr key={l.refCode} className={l.rank === 1 ? 'leader' : ''}>
               <td>{l.rank}</td>
               <td>
                 <code>{l.refCode}</code>
               </td>
-              <td>{l.contact || <span className="hint">none left</span>}</td>
+              <td>{l.contact || <span className="muted">none left</span>}</td>
               <td>
                 <b>{l.validReferrals}</b>
               </td>
@@ -243,7 +250,7 @@ function Referrals({ data }: { data: AdminPayload }) {
 function Responses({ data, onDisqualify }: { data: AdminPayload; onDisqualify: (id: string) => void }) {
   const [open, setOpen] = useState<string | null>(null);
   const rows = [...data.responses].reverse();
-  if (!rows.length) return <p className="empty">No responses yet.</p>;
+  if (!rows.length) return <p className="muted center">No responses yet.</p>;
   return (
     <div className="table-wrap">
       <table>
@@ -272,9 +279,9 @@ function Responses({ data, onDisqualify }: { data: AdminPayload; onDisqualify: (
                 <td>
                   {r.referredBy ? (
                     r.validReferral ? (
-                      <span className="pill ok">Valid</span>
+                      <span className="tag good">Valid</span>
                     ) : (
-                      <span className="pill bad" title={r.referralNote}>
+                      <span className="tag bad" title={r.referralNote}>
                         Not counted: {r.referralNote}
                       </span>
                     )
@@ -283,20 +290,22 @@ function Responses({ data, onDisqualify }: { data: AdminPayload; onDisqualify: (
                   )}
                 </td>
                 <td className="row-actions">
-                  <button className="link" onClick={() => setOpen(open === r.id ? null : r.id)}>
-                    {open === r.id ? 'Hide' : 'View'}
-                  </button>
-                  {r.validReferral && (
-                    <button className="link danger" onClick={() => onDisqualify(r.id)}>
-                      Disqualify
+                  <div className="row">
+                    <button className="link" onClick={() => setOpen(open === r.id ? null : r.id)}>
+                      {open === r.id ? 'Hide' : 'View'}
                     </button>
-                  )}
+                    {r.validReferral && (
+                      <button className="link danger" onClick={() => onDisqualify(r.id)}>
+                        Disqualify
+                      </button>
+                    )}
+                  </div>
                 </td>
               </tr>
               {open === r.id && (
                 <tr key={r.id + 'd'} className="detail">
                   <td colSpan={7}>
-                    <dl>
+                    <dl className="qa">
                       {QUESTIONS.filter((q) => r.answers[q.id] !== undefined).map((q) => (
                         <div key={q.id}>
                           <dt>

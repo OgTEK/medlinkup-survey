@@ -150,7 +150,7 @@ export const Footer: React.FC<FooterProps> = ({ image = DEFAULT_IMAGE }) => {
             className="group pointer-events-auto absolute inset-x-4 bottom-4 flex flex-col items-start justify-start rounded-[4px] bg-warm-white px-4 pt-6 pb-[72px] text-left text-warm-black transition-colors duration-[400ms] hover:bg-cream md:inset-x-auto md:right-6 md:bottom-6 md:w-[361px] lg:right-8 lg:bottom-8 lg:h-[248px] lg:w-[635px] lg:p-8 xl:right-6 xl:bottom-6 xl:w-[688px] 2xl:w-[928px]"
           >
             <p className="font-sans text-[32px] leading-[1.1] font-medium tracking-[-0.06em] cap-trim lg:text-[48px] lg:leading-[0.98]">
-              Help us build care that follows you.{' '}
+              Help us build care that follows you.{' '}<br/>
               <span className="relative">
                 Join our research.
                 <span className="group-heavy-link-line bottom-[2px] h-[3px] lg:bottom-[4px] lg:h-[4px]" />

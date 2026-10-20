@@ -10,7 +10,7 @@ import { TheProblem } from '../components/TheProblem.tsx';
 import { OurApproach } from '../components/OurApproach.tsx';
 import { CarePathways } from '../components/CarePathways.tsx';
 import  WhereWeAreStarting  from '../components/WhereWeAreStarting.tsx';
-import { CareAndTrust } from '../components/CareAndTrust.tsx';
+import CareAndTrust from '../components/CareAndTrust.tsx';
 import { FounderStory } from '../components/FounderStory.tsx';
 import { ResearchSection } from '../components/ResearchSection.tsx';
 import { EarlyAccessSection } from '../components/EarlyAccessSection.tsx';
@@ -154,7 +154,6 @@ export default function App() {
 
         {/* 07. Building With Care and Trust */}
         <CareAndTrust
-          onOpenPrivacyNotice={() => setIsPrivacyNoticeOpen(true)}
         />
 
         {/* 08. From The Founder */}

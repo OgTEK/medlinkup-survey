@@ -400,7 +400,7 @@ const BODY =
 
 const PRIMARY_CTA = { label: "Get Early Access" }; // opens the early-access modal
 const SECONDARY_CTA = {
-  label: "Help shape MedLinkup. Join our research.",
+  label: "Join our research.",
   to: "/survey",
 };
 

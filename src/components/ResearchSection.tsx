@@ -7,7 +7,7 @@ import { PillButton } from "./ui/PillButton";
 /*  CONTENT — edit this section only                                          */
 /* -------------------------------------------------------------------------- */
 
-const EYEBROW = "Research";
+const EYEBROW = "Help us build MedLinkup";
 const HEADLINE = ["Your healthcare", "experience matters."];
 
 const LEAD =
@@ -24,15 +24,15 @@ const FACTS = [
   { icon: ShieldCheck, label: "No medical history needed" },
 ];
 
-const CTA_LABEL = "Take the survey";
-const PRIVACY_INTRO = "Participation is voluntary. You do not need to provide your medical history to participate. Please review our";
+const CTA_LABEL = "Take Our Healthcare Survey";
+const PRIVACY_INTRO = "Survey takes about 7 to 10 minutes | Participation is voluntary & You don't need to provide your medical history. Please review our ";
 const PRIVACY_LINK = "research privacy notice";
 const PRIVACY_OUTRO = "before submitting your responses.";
 
 /* Colours come from your existing theme variables */
-const PANEL_BG = "var(--color-warm-black)";
-const PANEL_TEXT = "var(--color-warm-white)";
-const ACCENT = "var(--color-yellow)"; // highlight line + icons
+const PANEL_BG = "var(--color-warm-black, #022524)";
+const PANEL_TEXT = "var(--color-warm-white, #f7f1e9)";
+const ACCENT = "var(--color-yellow, #ffe7a6)"; // highlight line + icons
 const LINE = "rgba(247, 241, 233, 0.18)"; // dividers and chip borders
 const MUTED = "rgba(247, 241, 233, 0.7)";
 
@@ -55,7 +55,7 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({
     <section
       id="research"
       ref={containerRef as React.RefObject<HTMLElement>}
-      className="bg-warm-white block-padding"
+      className="bg-warm-white block-padding research-fade-up "
       style={
         {
           "--block-pt-mob": "64px",
@@ -66,15 +66,24 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({
       }
     >
       <div className="container">
+        {/*
+          The dark panel itself is NOT animated. Only the content inside it
+          fades up. Previously the panel carried `research-fade-up`, so if the
+          scroll-reveal hook hadn't fired (common on mobile, where the panel is
+          very tall) the whole dark background stayed invisible.
+        */}
         <div
-          className="research-fade-up overflow-hidden rounded-[4px]"
+          className="overflow-hidden rounded-[4px]"
           style={{
-            background: PANEL_BG,
+            backgroundColor: PANEL_BG,
             color: PANEL_TEXT,
             padding: "clamp(24px, 5vw, 64px)",
           }}
         >
-          <div className="site-grid" style={{ rowGap: "clamp(32px, 5vw, 56px)" }}>
+          <div
+            className="site-grid"
+            style={{ rowGap: "clamp(32px, 5vw, 56px)" }}
+          >
             {/* Left: eyebrow + headline */}
             <div className="col-span-full lg:col-span-6 xl:col-span-11 flex flex-col gap-8">
               <span
@@ -117,7 +126,7 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({
                 {HIGHLIGHT}
               </p>
 
-              <ul
+              {/* <ul
                 className="flex flex-wrap"
                 style={{ gap: 8, marginTop: 8 }}
                 aria-label="About the survey"
@@ -137,7 +146,7 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({
                     <span>{label}</span>
                   </li>
                 ))}
-              </ul>
+              </ul> */}
 
               <div style={{ marginTop: 16 }}>
                 <PillButton
@@ -151,7 +160,7 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({
 
           {/* Footer: ethics & privacy note */}
           <div
-            className="research-fade-up body-small"
+            className="body-small"
             style={{
               marginTop: "clamp(32px, 5vw, 56px)",
               paddingTop: 24,
