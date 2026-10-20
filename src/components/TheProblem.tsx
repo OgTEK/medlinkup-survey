@@ -23,7 +23,7 @@ const patientQuestions: PatientQuestion[] = [
     detail: "Care that knows your needs and stays connected. We believe better healthcare isn't only about getting an appointment. It's about what happens before, during and after it.",
     tag: 'Diagnostics',
     bg: 'radial-gradient(120% 120% at 20% 10%, #1b5e57 0%, #0f3b37 45%, #0a1f1e 100%)',
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=3253&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
+    image: '',
   },
   {
     q: "Your care shouldn't start over at every appointment.",

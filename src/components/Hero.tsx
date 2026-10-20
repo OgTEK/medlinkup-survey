@@ -684,7 +684,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEarlyAccess }) => {
 
             <div
               ref={ctaRef}
-              className="hero-reveal flex flex-col items-start gap-6 py-6 sm:flex-row sm:items-center sm:gap-10"
+              className="hero-reveal flex flex-row items-start gap-6 py-6 sm:flex-row sm:items-center sm:gap-10"
             >
               <PillButton
                 label={PRIMARY_CTA.label}

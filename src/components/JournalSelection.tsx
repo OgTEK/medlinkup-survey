@@ -95,12 +95,22 @@ const SRCSET_STEPS: [string, number][] = [
 
 const EASE = "ease-[cubic-bezier(0.25,0.46,0.45,0.94)]";
 
+/**
+ * Build an Unsplash URL at a given width. Works whether or not `url` already has
+ * a query string (yours do), so it never produces a broken "?...?..." URL and
+ * never downloads the 3000px+ original.
+ */
+function imgUrl(url: string, width: number) {
+    const u = new URL(url);
+    u.searchParams.set("w", String(width));
+    u.searchParams.set("q", "70");
+    u.searchParams.set("auto", "format");
+    u.searchParams.set("fit", "crop");
+    return u.toString();
+}
+
 function buildSrcSet(url: string) {
-    return SRCSET_STEPS.map(([dpr, w]) =>
-        dpr === "1"
-            ? `${url}?auto=format&w=680 ${w}w`
-            : `${url}?auto=format&dpr=${dpr}&w=680 ${w}w`
-    ).join(",");
+    return SRCSET_STEPS.map(([, w]) => `${imgUrl(url, w)} ${w}w`).join(",");
 }
 
 function parseDate(iso: string) {
@@ -159,7 +169,7 @@ function PostCard({ post, sizes }: { post: Post; sizes: string }) {
                     <picture className="size-full object-cover site-image cover">
                         <source srcSet={buildSrcSet(post.image)} sizes={sizes} />
                         <img
-                            src={`${post.image}?auto=format&w=680`}
+                            src={imgUrl(post.image, 680)}
                             alt={post.imageAlt ?? ""}
                             loading="lazy"
                             referrerPolicy="no-referrer-when-downgrade"
@@ -248,6 +258,9 @@ export default function JournalSection() {
             className="bg-warm-white block-padding"
             style={
                 {
+                    // The carousel intentionally bleeds past the container (to show the
+                    // next card). Clip at the section edge so it can't widen the page.
+                    overflowX: "hidden",
                     "--block-pt-mob": "98px",
                     "--block-pb-mob": "98px",
                     "--block-pt-des": "124px",
@@ -274,7 +287,7 @@ export default function JournalSection() {
                     {/* Desktop grid */}
                     <div className="mt-[32px] hidden gap-[16px] lg:mt-[64px] lg:grid lg:grid-cols-12 xl:grid-cols-24 xl:items-start">
                         {POSTS.map((post) => (
-                            <div className={post.desktopSpan}>
+                            <div key={post.number} className={post.desktopSpan}>
                                 <PostCard post={post} sizes={post.desktopSizes} />
                             </div>
                         ))}
@@ -284,6 +297,7 @@ export default function JournalSection() {
                     <div className="mt-[32px] lg:hidden">
                         <Swiper
                             className="!overflow-visible"
+                            style={{ maxWidth: "100%" }}
                             slidesPerView={1.1}
                             spaceBetween={16}
                             onSwiper={(s) => {
@@ -295,7 +309,7 @@ export default function JournalSection() {
                             onReachEnd={syncState}
                         >
                             {POSTS.map((post) => (
-                                <SwiperSlide  className="!h-auto">
+                                <SwiperSlide key={post.number} className="!h-auto">
                                     <PostCard post={post} sizes={MOBILE_SIZES} />
                                 </SwiperSlide>
                             ))}
@@ -314,7 +328,7 @@ export default function JournalSection() {
                                     onClick={() => swiper?.slideNext()}
                                 />
                             </div>
-                            <ViewAllLink />
+                            {/* <ViewAllLink /> */}
                         </div>
                     </div>
                 </div>

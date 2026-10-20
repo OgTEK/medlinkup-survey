@@ -1,62 +1,66 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { EarlyAccessModal } from "./EarlyAccessModal";
 import { PillButton } from "./ui/PillButton";
-import logo from '../assets/images/medlinkup_logo.svg'
+
+/* -------------------------------------------------------------------------- */
+/*  CONTENT — edit this section only                                          */
+/* -------------------------------------------------------------------------- */
+
+type NavLink = {
+  /** id of the section on the page to scroll to */
+  id: string;
+  /** label in the desktop bar */
+  label: string;
+  /** label in the full-screen mobile menu */
+  mobileLabel: string;
+};
+
+const NAV_LINKS: NavLink[] = [
+  { id: "why-medlinkup", label: "Why Us", mobileLabel: "Why MedLinkup" },
+  { id: "our-approach", label: "Approach", mobileLabel: "Our Approach" },
+  { id: "how-it-works", label: "Process", mobileLabel: "How It Works" },
+  { id: "our-story", label: "Story", mobileLabel: "Our Story" },
+];
+
+const RESEARCH = { label: "Research", mobileLabel: "Research Survey" };
+const CTA_LABEL = "Get Early Access";
+const MOBILE_CTA_NOTE = "Be among the first women in Nigeria to try MedLinkup.";
+
+/* Animation settings (ms) */
+const OPEN_MS = 650; // overlay reveal
+const ITEM_STAGGER_MS = 60; // delay between menu items
+const ITEM_START_MS = 180; // delay before the first item appears
+const EASE_PANEL = "cubic-bezier(0.76, 0, 0.24, 1)";
+const EASE_ITEM = "cubic-bezier(0.16, 1, 0.3, 1)";
+
+/** Height of the floating pill + its top offset (menu content starts below it) */
+const HEADER_OFFSET = 88;
+
+/* -------------------------------------------------------------------------- */
+/*  HELPERS                                                                   */
+/* -------------------------------------------------------------------------- */
 
 interface NavbarProps {
-  onOpenEarlyAccess: () => void;
-  onOpenResearch: () => void;
+  onOpenEarlyAccess?: () => void;
+  onOpenResearch?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({
-  onOpenEarlyAccess,
-  onOpenResearch,
-}) => {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [earlyAccessOpen, setEarlyAccessOpen] = useState(false);
-
+function usePrefersReducedMotion() {
+  const [reduce, setReduce] = useState(false);
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 24);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => window.removeEventListener("scroll", handleScroll);
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduce(mql.matches);
+    update();
+    mql.addEventListener("change", update);
+    return () => mql.removeEventListener("change", update);
   }, []);
+  return reduce;
+}
 
-  const scrollToSection = (id: string) => {
-    setMobileMenuOpen(false);
-
-    const element = document.getElementById(id);
-
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  return (
-    <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 transition-all duration-300">
-      <div
-        data-menu-panel="true"
-        className={`pointer-events-auto overflow-hidden border border-stone-200/80 bg-white text-stone-900 shadow-[0_4px_24px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out ${mobileMenuOpen
-            ? "h-auto w-full max-w-md rounded-2xl"
-            : "h-14 w-full max-w-6xl rounded-full"
-          }`}
-      >
-        {/* Main Navbar Content */}
-        <div className="flex h-14 shrink-0 items-center justify-between gap-4 px-5">
-          {/* Logo */}
-          <a
-            href="#"
-            aria-label="MedLinkup home"
-            className="group relative inline-flex shrink-0 select-none items-center text-sm font-semibold tracking-tight text-stone-900"
-          >
-            <span className="relative inline-flex shrink-0 items-start py-[2px]">
-              {/* <img src={logo} alt="medlinkup logo" /> */}
-              <svg height="44" viewBox="0 0 680 156" fill="none" xmlns="http://www.w3.org/2000/svg">
+const Logo = () => (
+  <span className="relative inline-flex shrink-0 items-start py-[2px]">
+              <svg className="h-auto" height="36" aria-hidden="true" viewBox="0 0 680 156" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M75.3369 119.385C74.8138 119.385 74.2761 119.356 73.753 119.298C65.2231 118.31 58.5822 111.015 58.6549 102.674C58.7275 94.1007 65.1795 87.0094 73.3461 86.5298C77.2405 86.2973 81.1058 86.2683 84.0557 86.2683C85.6396 86.2683 87.2235 86.2683 88.8075 86.2828C90.3914 86.2828 91.9898 86.2973 93.5738 86.2973C94.8234 86.2973 96.0731 86.2973 97.3228 86.2683C99.5316 86.2392 101.798 86.2101 103.935 85.5998C109.05 84.1612 111.534 80.4557 110.924 75.1954C110.357 70.3855 106.39 66.7526 101.697 66.7526C101.406 66.7526 101.115 66.7526 100.825 66.7962C95.8406 67.2758 92.6583 70.4291 91.8445 75.6604C91.6701 76.8229 91.7137 77.9854 91.7573 79.1043C91.7573 79.2205 91.7573 79.3368 91.7573 79.4676C88.7639 79.4821 86.1628 79.4821 84.7968 79.4821C84.7387 77.8691 84.7096 74.6432 85.3926 72.2019C87.4125 65.0089 94.1986 59.7776 101.537 59.7776C102.278 59.7776 103.034 59.8357 103.76 59.9374C112.101 61.1435 118.306 68.787 117.899 77.3315C117.492 85.8033 110.837 92.4441 102.409 92.7638C99.0085 92.8946 95.3902 92.9527 90.6965 92.9527C88.5168 92.9527 86.3371 92.9527 84.1574 92.9236C81.9777 92.9236 79.7835 92.8946 77.6038 92.8946H76.2814C70.8758 92.9091 67.3011 95.4085 65.9351 100.117C65.194 102.674 65.5718 105.45 66.9523 107.746C68.3328 110.013 70.5706 111.597 73.1136 112.105C73.782 112.236 74.4505 112.309 75.1189 112.309C80.1032 112.309 84.2301 108.574 84.7242 103.619C84.8404 102.471 84.8113 101.337 84.7823 100.248C84.7823 100.131 84.7823 99.9999 84.7823 99.8841C87.5432 99.8405 90.6094 99.7388 92.2659 99.6807C92.1206 101.207 91.8009 103.924 91.2051 106.569C89.5922 113.747 82.6171 119.371 75.3369 119.371V119.385Z" fill="#008080" />
                 <path d="M44.6904 96.1206C44.1673 96.1206 43.6296 96.0915 43.1065 96.0334C34.5766 95.0453 27.9358 87.7505 28.0084 79.4095C28.0811 70.836 34.533 63.7447 42.6996 63.2652C46.594 63.0327 50.4594 63.0036 53.4092 63.0036C54.9932 63.0036 56.5771 63.0036 58.161 63.0181C59.7449 63.0181 61.3434 63.0327 62.9273 63.0327C64.177 63.0327 65.4267 63.0327 66.6764 63.0036C68.8851 62.9746 71.152 62.9455 73.2881 62.3352C78.4032 60.8966 80.888 57.1911 80.2777 51.9307C79.711 47.1208 75.7439 43.488 71.0503 43.488C70.7597 43.488 70.4691 43.488 70.1784 43.5316C65.1942 44.0111 62.0118 47.1499 61.1981 52.3957C61.0237 53.5582 61.0673 54.7207 61.1109 55.8397C61.1109 55.9559 61.1109 56.0722 61.1109 56.2029C58.1029 56.2175 55.5163 56.2175 54.1503 56.2175C54.0922 54.6045 54.0632 51.3785 54.7461 48.9373C56.766 41.7442 63.5521 36.5129 70.8905 36.5129C71.6316 36.5129 72.3872 36.5711 73.1138 36.6728C81.4548 37.8789 87.6597 45.5224 87.2528 54.0668C86.8459 62.5386 80.1905 69.1794 71.7624 69.4991C68.362 69.6299 64.7437 69.688 60.0501 69.688C57.8704 69.688 55.6907 69.688 53.511 69.659C51.3313 69.659 49.137 69.6299 46.9573 69.6299H45.635C40.2293 69.6444 36.6546 72.1438 35.2886 76.852C34.5475 79.4095 34.9253 82.185 36.3058 84.481C37.6863 86.7479 39.9241 88.3318 42.4671 88.8404C43.1356 88.9712 43.804 89.0438 44.4725 89.0438C49.4567 89.0438 53.5836 85.3093 54.0777 80.3541C54.1939 79.2061 54.1649 78.0726 54.1358 76.9828C54.1358 76.8665 54.1358 76.7358 54.1358 76.6195C56.8968 76.5759 59.9629 76.4742 61.6195 76.4161C61.4742 77.9419 61.1545 80.6592 60.5587 83.3039C58.9457 90.4824 51.9706 96.1061 44.6904 96.1061V96.1206Z" fill="#008080" />
                 <path d="M74 18C40.854 18 14 44.854 14 78C14 111.146 40.854 138 74 138C107.146 138 134 111.146 134 78C134 44.854 107.132 18 74 18ZM74 130.284C45.1262 130.284 21.7161 106.874 21.7161 78C21.7161 49.1262 45.1117 25.7016 74 25.7016C102.888 25.7016 126.284 49.1116 126.284 77.9855C126.284 106.859 102.874 130.269 74 130.269V130.284Z" fill="#008080" />
@@ -64,153 +68,275 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <path d="M543.299 117.812C540.927 117.812 538.585 116.92 536.712 115.319C533.085 112.206 529.489 109.064 525.909 105.921L525.682 105.725C522.645 103.065 519.608 100.391 516.541 97.7469C514.667 96.1302 514.259 94.2717 515.181 91.5068L515.619 90.1923L518.626 92.7306C519.804 93.7278 520.938 94.6797 522.041 95.6467C523.748 97.1274 525.44 98.6232 527.132 100.119C531.076 103.594 535.155 107.205 539.295 110.62C540.549 111.647 542.483 112.373 544.1 112.388C545.762 112.388 547.061 111.224 547.666 109.185C548.225 107.326 547.696 105.709 546.019 104.244C542.408 101.056 538.782 97.8828 535.155 94.7099L527.782 88.2432C525.909 86.5963 524.881 85.6897 524.881 84.481C524.881 83.2722 525.878 82.3959 527.676 80.8094C531.378 77.5459 535.095 74.2974 538.812 71.0489L544.931 65.7154C545.399 65.3225 545.853 64.9146 546.276 64.4915C548.27 62.4367 548.467 59.7774 546.729 57.8586C545.777 56.8009 544.538 56.2268 543.239 56.2268C542.136 56.2268 541.048 56.6498 540.096 57.4355C537.21 59.8228 534.339 62.3611 531.559 64.8088L528.462 67.5436C526.996 68.8279 525.531 70.1424 524.08 71.4417C520.756 74.4183 517.372 77.4401 513.897 80.2504C512.461 81.4138 509.591 83.4082 506.448 83.8917C505.859 83.9824 505.254 84.0277 504.68 84.0277C498.742 84.0277 494.149 79.5252 493.771 73.3002C493.53 69.4171 493.53 65.3225 493.771 60.7898C494.043 55.8339 497.126 52.238 501.825 51.4221C502.429 51.3163 503.018 51.271 503.607 51.271C507.566 51.271 510.966 53.5373 512.476 57.1787C512.884 58.1456 513.111 59.3393 513.171 60.6991C513.232 62.2402 513.262 63.7965 513.277 65.3376C513.292 66.8788 513.323 68.3444 513.368 69.7948C513.459 72.1519 512.31 73.6779 509.636 74.7658L508.337 75.2946V70.7316C508.337 68.1328 508.337 65.6851 508.337 63.2526V62.9957C508.337 61.9381 508.321 60.8502 508.095 59.8983C507.596 57.7528 505.723 56.257 503.532 56.257C503.411 56.257 503.29 56.257 503.184 56.257C501.16 56.4081 499.014 57.9492 498.908 60.276C498.727 64.6879 498.531 69.2358 498.999 73.6326C499.331 76.7753 501.779 78.9661 504.937 78.9661C506.554 78.9661 508.14 78.3769 509.5 77.2739C512.492 74.8262 515.438 72.2274 518.278 69.7193C519.517 68.6314 520.741 67.5436 521.98 66.4557L526.906 62.1647C529.837 59.6112 532.768 57.0427 535.699 54.5043C538.132 52.4042 540.821 51.3012 543.481 51.3012C546.14 51.3012 548.603 52.4193 550.506 54.5497C552.229 56.4836 553.06 58.8256 552.924 61.2884C552.758 64.1591 551.247 66.9694 548.693 69.2207C545.55 71.9857 542.408 74.7507 539.25 77.5156L532.738 83.2269C532.315 83.5895 531.907 83.9824 531.454 84.4205L531.363 84.5112L545.037 96.4777L546.276 97.5504C547.469 98.5779 548.678 99.6355 549.811 100.723C553.74 104.531 554.087 110.439 550.582 114.443C548.708 116.588 546.034 117.827 543.224 117.827L543.299 117.812Z" fill="#008080" />
                 <path d="M503.517 117.767C498.047 117.736 494.058 113.747 493.817 108.097C493.62 103.715 493.62 99.7263 493.817 95.8734C494.104 90.1168 498.213 85.5236 503.592 84.9797H503.819C504.801 84.9797 506.403 85.6143 506.826 86.6266C507.128 87.3518 507.128 88.0166 506.826 88.5908C506.342 89.5124 505.254 89.86 504.484 90.0262C500.676 90.8723 498.969 93.0027 498.908 96.916C498.863 100.663 498.863 104.078 498.924 107.356C498.984 110.348 500.994 112.675 503.517 112.675C506.357 112.614 508.306 110.484 508.337 107.371C508.412 100.467 508.427 94.151 508.337 88.0922C508.306 85.4783 509.545 84.1185 512.159 83.9523L513.761 83.8767C513.761 83.8767 513.564 102.748 513.428 108.021C513.277 113.763 509.228 117.782 503.592 117.782H503.517V117.767Z" fill="#008080" />
               </svg>
+  </span>
+);
 
-            </span>
-          </a>
+/* -------------------------------------------------------------------------- */
+/*  COMPONENT                                                                 */
+/* -------------------------------------------------------------------------- */
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden items-center gap-6 text-[13px] font-medium text-stone-500 lg:flex">
-            <button
-              type="button"
-              onClick={() => scrollToSection("why-medlinkup")}
-              className="cursor-pointer whitespace-nowrap py-1 transition-colors hover:text-stone-900"
-            >
-              Why Us
-            </button>
+export const Navbar: React.FC<NavbarProps> = ({
+  onOpenEarlyAccess,
+  onOpenResearch,
+}) => {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [earlyAccessOpen, setEarlyAccessOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const reduce = usePrefersReducedMotion();
 
-            <button
-              type="button"
-              onClick={() => scrollToSection("our-approach")}
-              className="cursor-pointer whitespace-nowrap py-1 transition-colors hover:text-stone-900"
-            >
-              Approach
-            </button>
+  /* Scrolled state (adds a stronger shadow to the pill) */
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-            <button
-              type="button"
-              onClick={() => scrollToSection("how-it-works")}
-              className="cursor-pointer whitespace-nowrap py-1 transition-colors hover:text-stone-900"
-            >
-              Process
-            </button>
+  /* Lock page scroll while the full-screen menu is open */
+  useEffect(() => {
+    if (!open) return;
+    const html = document.documentElement;
+    const prevBody = document.body.style.overflow;
+    const prevHtml = html.style.overflow;
+    document.body.style.overflow = "hidden";
+    html.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevBody;
+      html.style.overflow = prevHtml;
+    };
+  }, [open]);
 
-            <button
-              type="button"
-              onClick={() => scrollToSection("our-story")}
-              className="cursor-pointer whitespace-nowrap py-1 transition-colors hover:text-stone-900"
-            >
-              Story
-            </button>
+  /* Escape closes; resizing up to desktop closes */
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    const onResize = () => {
+      if (window.innerWidth >= 1024) setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [open]);
 
-            <button
-              type="button"
-              onClick={onOpenResearch}
-              className="flex items-center gap-0.5 whitespace-nowrap py-1 font-medium text-teal-600 transition-colors hover:text-teal-700"
-            >
-              <span>Research</span>
-              <ArrowUpRight className="h-3 w-3 opacity-80" />
-            </button>
-          </nav>
+  const scrollToSection = useCallback((id: string) => {
+    setOpen(false);
+    // wait a beat so the page can unlock scrolling before we move it
+    window.setTimeout(() => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
+      window.scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
+    }, 60);
+  }, [reduce]);
 
-          {/* Desktop CTA and Mobile Menu Toggle */}
-          <div className="flex shrink-0 items-center gap-3">
-            <div className="hidden lg:block">
-              <PillButton
-                label="Get Early Access"
-                variant="primary"
-                onClick={() => setEarlyAccessOpen(true)}
-              />
-            </div>
+  /* Prefer the parent's handler; fall back to this component's own modal */
+  const openEarlyAccess = () => {
+    setOpen(false);
+    if (onOpenEarlyAccess) onOpenEarlyAccess();
+    else setEarlyAccessOpen(true);
+  };
+  const openResearch = () => {
+    setOpen(false);
+    onOpenResearch?.();
+  };
 
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="rounded-full p-2 text-stone-500 transition-colors hover:bg-stone-100 hover:text-stone-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 lg:hidden"
-              aria-label={
-                mobileMenuOpen
-                  ? "Close navigation menu"
-                  : "Open navigation menu"
-              }
-              aria-expanded={mobileMenuOpen}
-            >
-              {mobileMenuOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
-              )}
-            </button>
-          </div>
+  /* --- animation helpers (inline so they don't depend on Tailwind) --- */
+  const panelMs = reduce ? 0 : OPEN_MS;
+  const itemStyle = (i: number): React.CSSProperties => {
+    const delay = open && !reduce ? ITEM_START_MS + i * ITEM_STAGGER_MS : 0;
+    return {
+      opacity: open ? 1 : 0,
+      transform: open ? "translateY(0)" : "translateY(28px)",
+      transition: reduce
+        ? "none"
+        : `opacity 450ms ease ${delay}ms, transform 700ms ${EASE_ITEM} ${delay}ms`,
+    };
+  };
+
+  const rowClass =
+    "group flex w-full items-center justify-between border-b border-stone-900/10 py-4 text-left";
+  const rowLabel =
+    "text-[clamp(28px,8.5vw,44px)] font-medium leading-[1.05] tracking-[-0.04em] text-stone-900";
+
+  return (
+    <>
+      {/* ------------------------- Full-screen mobile menu ------------------------- */}
+      <div
+        id="mobile-menu"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
+        aria-hidden={!open}
+        className="lg:hidden"
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 40,
+          display: "flex",
+          flexDirection: "column",
+          background: "#f7f1e9",
+          paddingTop: `calc(${HEADER_OFFSET}px + env(safe-area-inset-top, 0px))`,
+          paddingLeft: 24,
+          paddingRight: 24,
+          paddingBottom: "calc(24px + env(safe-area-inset-bottom, 0px))",
+          overflowY: "auto",
+          overscrollBehavior: "contain",
+          clipPath: open ? "inset(0 0 0 0)" : "inset(0 0 100% 0)",
+          visibility: open ? "visible" : "hidden",
+          pointerEvents: open ? "auto" : "none",
+          transition: reduce
+            ? "none"
+            : `clip-path ${panelMs}ms ${EASE_PANEL}, visibility 0s linear ${open ? 0 : panelMs}ms`,
+        }}
+      >
+        <nav className="flex flex-1 flex-col justify-center py-6">
+          <ul className="flex flex-col">
+            {NAV_LINKS.map((link, i) => (
+              <li key={link.id} style={itemStyle(i)}>
+                <button
+                  type="button"
+                  onClick={() => scrollToSection(link.id)}
+                  className={rowClass}
+                  tabIndex={open ? 0 : -1}
+                >
+                  <span className={rowLabel}>{link.mobileLabel}</span>
+                  <span className="text-xs font-medium tabular-nums text-stone-400">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </button>
+              </li>
+            ))}
+
+            <li style={itemStyle(NAV_LINKS.length)}>
+              <button
+                type="button"
+                onClick={openResearch}
+                className={rowClass}
+                tabIndex={open ? 0 : -1}
+              >
+                <span className={`${rowLabel} !text-teal-600`}>
+                  {RESEARCH.mobileLabel}
+                </span>
+                <ArrowUpRight className="h-6 w-6 text-teal-600" />
+              </button>
+            </li>
+          </ul>
+        </nav>
+
+        {/* Button pinned to the bottom of the screen */}
+        <div style={itemStyle(NAV_LINKS.length + 1)}>
+          <p className="mb-4 max-w-[32ch] text-sm leading-snug text-stone-500">
+            {MOBILE_CTA_NOTE}
+          </p>
+          <PillButton
+            label={CTA_LABEL}
+            variant="primary"
+            onClick={openEarlyAccess}
+            className="w-full"
+          />
         </div>
-
-        {/* Mobile Dropdown */}
-        {mobileMenuOpen && (
-          <div className="animate-in fade-in slide-in-from-top-2 border-t border-stone-100 bg-white px-5 py-5 duration-200 lg:hidden">
-            <nav className="flex flex-col gap-3 text-sm font-medium text-stone-600">
-              <button
-                type="button"
-                onClick={() => scrollToSection("why-medlinkup")}
-                className="py-2 text-left transition-colors hover:text-stone-900"
-              >
-                Why MedLinkup
-              </button>
-
-              <button
-                type="button"
-                onClick={() => scrollToSection("our-approach")}
-                className="py-2 text-left transition-colors hover:text-stone-900"
-              >
-                Our Approach
-              </button>
-
-              <button
-                type="button"
-                onClick={() => scrollToSection("how-it-works")}
-                className="py-2 text-left transition-colors hover:text-stone-900"
-              >
-                How It Works
-              </button>
-
-              <button
-                type="button"
-                onClick={() => scrollToSection("our-story")}
-                className="py-2 text-left transition-colors hover:text-stone-900"
-              >
-                Our Story
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenResearch();
-                }}
-                className="flex items-center justify-between py-2 font-semibold text-teal-600 transition-colors hover:text-teal-700"
-              >
-                <span>Research Survey</span>
-                <ArrowUpRight className="h-4 w-4" />
-              </button>
-
-              <div className="mt-2">
-                <PillButton
-                  label="Get Early Access"
-                  variant="primary"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenEarlyAccess();
-                  }}
-                  className="w-full"
-                />
-              </div>
-            </nav>
-          </div>
-        )}
       </div>
 
-      {/* Early Access Modal */}
+      {/* ------------------------------ Floating bar ------------------------------ */}
+      <header className="pointer-events-none fixed left-0 right-0 top-4 z-50 flex justify-center px-4">
+        <div
+          data-menu-panel="true"
+          className={`pointer-events-auto h-14 w-full max-w-6xl overflow-hidden rounded-full border border-stone-200/80 text-stone-900 backdrop-blur-md bg-white transition-[box-shadow,background-color] duration-300 ease-out ${
+            scrolled || open
+              ? "bg-white shadow-[0_8px_32px_rgba(0,0,0,0.10)]"
+              : "bg-white/90 shadow-[0_4px_24px_rgba(0,0,0,0.06)]"
+          }`}
+        >
+          <div className="flex h-14 items-center justify-between gap-4 px-5">
+            {/* Logo */}
+            <a
+              href="#"
+              aria-label="MedLinkup home"
+              onClick={() => setOpen(false)}
+              className="group relative inline-flex shrink-0 select-none items-center text-sm font-semibold tracking-tight text-stone-900"
+            >
+              <Logo />
+            </a>
+
+            {/* Desktop links */}
+            <nav className="hidden items-center gap-6 text-[20px] font-medium text-stone-500 lg:flex">
+              {NAV_LINKS.map((link) => (
+                <button
+                  key={link.id}
+                  type="button"
+                  onClick={() => scrollToSection(link.id)}
+                  className="cursor-pointer whitespace-nowrap py-1 transition-colors hover:text-stone-900"
+                >
+                  {link.label}
+                </button>
+              ))}
+
+              <button
+                type="button"
+                onClick={openResearch}
+                className="flex items-center gap-0.5 whitespace-nowrap py-1 font-medium text-teal-600 transition-colors hover:text-teal-700"
+              >
+                <span>{RESEARCH.label}</span>
+                <ArrowUpRight className="h-3 w-3 opacity-80" />
+              </button>
+            </nav>
+
+            {/* Desktop CTA + mobile toggle */}
+            <div className="flex shrink-0 items-center gap-3">
+              <div className="hidden lg:block">
+                <PillButton
+                  label={CTA_LABEL}
+                  variant="primary"
+                  onClick={openEarlyAccess}
+                />
+              </div>
+
+              <button
+                ref={toggleRef}
+                type="button"
+                onClick={() => setOpen((v) => !v)}
+                className="relative h-10 w-10 rounded-full text-stone-700 transition-colors hover:bg-stone-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 lg:hidden"
+                aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+                aria-expanded={open}
+                aria-controls="mobile-menu"
+              >
+                {/* Menu ⇄ X crossfade + rotate */}
+                <Menu
+                  className="absolute inset-0 m-auto h-5 w-5"
+                  style={{
+                    opacity: open ? 0 : 1,
+                    transform: open ? "rotate(90deg) scale(0.6)" : "rotate(0) scale(1)",
+                    transition: reduce ? "none" : "opacity 250ms ease, transform 400ms " + EASE_ITEM,
+                  }}
+                />
+                <X
+                  className="absolute inset-0 m-auto h-5 w-5"
+                  style={{
+                    opacity: open ? 1 : 0,
+                    transform: open ? "rotate(0) scale(1)" : "rotate(-90deg) scale(0.6)",
+                    transition: reduce ? "none" : "opacity 250ms ease, transform 400ms " + EASE_ITEM,
+                  }}
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Fallback modal, used only when the parent doesn't handle early access */}
       <EarlyAccessModal
         open={earlyAccessOpen}
         onClose={() => setEarlyAccessOpen(false)}
       />
-    </header>
+    </>
   );
 };
