@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useScrollReveal } from '../utils/useScrollReveal';
-import { Statement } from './Statement';
 import "../thirdway.css"
 
 gsap.registerPlugin(ScrollTrigger);
@@ -20,29 +19,29 @@ interface PatientQuestion {
 
 const patientQuestions: PatientQuestion[] = [
   {
-    q: 'Where should you get the scan?',
-    detail: 'Finding an accredited imaging centre with reasonable rates and working equipment.',
+    q: "Our approach",
+    detail: "Care that knows your needs and stays connected. We believe better healthcare isn't only about getting an appointment. It's about what happens before, during and after it.",
     tag: 'Diagnostics',
     bg: 'radial-gradient(120% 120% at 20% 10%, #1b5e57 0%, #0f3b37 45%, #0a1f1e 100%)',
     image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=3253&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
   },
   {
-    q: 'Who explains the results?',
+    q: "Your care shouldn't start over at every appointment.",
     detail: 'Navigating dense radiology reports without clinical jargon leaving you anxious.',
     tag: 'Understanding',
     bg: 'radial-gradient(120% 120% at 80% 20%, #2a6f66 0%, #123c3a 50%, #0b1c1b 100%)',
     image: 'https://images.unsplash.com/photo-1758691461990-03b49d969495?q=80&w=3840&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
   },
   {
-    q: 'Which specialist do you see next?',
-    detail: 'Choosing the right doctor whose expertise actually matches your diagnostic findings.',
-    tag: 'Referral',
-    bg: 'radial-gradient(120% 120% at 30% 80%, #335c5a 0%, #1a3a3a 50%, #0e1a1a 100%)',
-    image: 'https://images.unsplash.com/photo-1666214277730-e9c7e755e5a3?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
+    q: 'Your health story matters',
+    detail: 'Navigating dense radiology reports without clinical jargon leaving you anxious.',
+    tag: 'Understanding',
+    bg: 'radial-gradient(120% 120% at 80% 20%, #2a6f66 0%, #123c3a 50%, #0b1c1b 100%)',
+    image: 'https://images.unsplash.com/photo-1758691461990-03b49d969495?q=80&w=3840&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
   },
   {
-    q: 'Will they know what your previous doctor recommended?',
-    detail: 'Carrying manila folders of paper records and having to recount your history from scratch.',
+    q: "Support shouldn't disappear when the consultation ends",
+    detail: "From tests and referrals to reminders and follow-up appointments, MedLinkup helps you understand what comes next and keep track of the care you need.",
     tag: 'Records',
     bg: 'radial-gradient(120% 120% at 70% 70%, #1f5c52 0%, #0f3431 50%, #091a19 100%)',
     image: 'https://images.unsplash.com/photo-1530288782965-fbad40327074?q=80&w=3072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D',
@@ -119,7 +118,6 @@ export const TheProblem: React.FC = () => {
   return (
     <section id="why-medlinkup" ref={sectionRef} className="border-b border-stone-200/70">
       {/* ---------- Intro (light) ---------- */}
-      <Statement />
 
       {/* ---------- The four questions ---------- */}
       {reduceMotion ? (

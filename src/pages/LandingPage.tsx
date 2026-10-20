@@ -139,7 +139,7 @@ export default function App() {
         <TheProblem />
 
         {/* 03. Our Approach */}
-        <OurApproach />
+        {/* <OurApproach /> */}
 
         {/* 04. One Visit or Ongoing Support */}
         {/* <CarePathways /> */}

@@ -28,18 +28,18 @@ type Photo = {
  * Replace the ids below with your own (the same id can repeat).
  */
 const PHOTOS: Photo[] = [
-  { name: "Photo 1", id: "photo-1656473031961-9d5d9ee19f40" },
-  { name: "Photo 2", id: "photo-1656473031961-9d5d9ee19f40" },
-  { name: "Photo 3", id: "photo-1656473031961-9d5d9ee19f40" },
-  { name: "Photo 4", id: "photo-1656473031961-9d5d9ee19f40" },
+  { name: "Photo 1", id: "photo-1693930882259-8ea6fd53fe23" },
+  { name: "Photo 2", id: "photo-1692801439915-ef9194bf0951" },
+  { name: "Photo 3", id: "photo-1664293282001-0363011a3cc9" },
+  { name: "Photo 4", id: "photo-1658497735599-1834bfa6ccaa" },
   { name: "Photo 5", id: "photo-1656473031961-9d5d9ee19f40" },
-  { name: "Photo 6", id: "photo-1656473031961-9d5d9ee19f40" },
-  { name: "Photo 7", id: "photo-1656473031961-9d5d9ee19f40" },
+  { name: "Photo 6", id: "photo-1719037108848-685e9e599827" },
+  { name: "Photo 7", id: "photo-1664293282001-0363011a3cc9" },
   { name: "Photo 8", id: "photo-1656473031961-9d5d9ee19f40" },
   { name: "Photo 9", id: "photo-1656473031961-9d5d9ee19f40" },
-  { name: "Photo 10", id: "photo-1656473031961-9d5d9ee19f40" },
+  { name: "Photo 10", id: "photo-1693930882259-8ea6fd53fe23" },
   { name: "Photo 11", id: "photo-1656473031961-9d5d9ee19f40" },
-  { name: "Photo 12", id: "photo-1656473031961-9d5d9ee19f40" },
+  { name: "Photo 12", id: "photo-1692801439915-ef9194bf0951" },
 ];
 
 /** Widths (px) used to build the srcset; tiles are square so height = width */

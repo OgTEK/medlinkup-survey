@@ -305,7 +305,7 @@ export const CardsTeamSection: React.FC = () => {
                             </div>
                         </div>
 
-                        <div className="link-container">
+                        {/* <div className="link-container">
                             <a
                                 className="group inline-flex items-center gap-2.5 transition-colors duration-500 text-warm-black"
                                 href="/people"
@@ -325,13 +325,14 @@ export const CardsTeamSection: React.FC = () => {
                                     <ArrowIcon className="absolute inset-0 m-auto h-[8px] w-[11px] transition-[translate,scale,rotate,color] [transition-duration:400ms,400ms,400ms,500ms] [transition-timing-function:var(--ease-button),var(--ease-button),var(--ease-button),cubic-bezier(0.4,0,0.2,1)] text-warm-white -translate-x-[150%] scale-0 group-hover:translate-x-0 group-hover:scale-100" />
                                 </span>
                             </a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
 
-            {/* Desktop count and carousel controls */}
-            <div className="desktop-count-and-controls-container mb-[20px] hidden lg:block">
+
+            {/* Desktop count and carousel controls */ }
+    {/* <div className="desktop-count-and-controls-container mb-[20px] hidden lg:block">
                 <div className="container site-grid">
                     <div className="col lg:col-span-6 xl:col-span-12">
                         <span className="number-pill h-[19px] w-[28px] body-small lg:h-[21px] lg:w-[32px] standard desktop-teams-count mr-[8px]">
@@ -364,10 +365,10 @@ export const CardsTeamSection: React.FC = () => {
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
-            {/* Team carousel */}
-            {/* <div className="carousel-container">
+    {/* Team carousel */ }
+    {/* <div className="carousel-container">
                 <div className="container">
                     <Swiper
                         className="swiper cards-teams-swiper"
@@ -394,8 +395,8 @@ export const CardsTeamSection: React.FC = () => {
                 </div>
             </div> */}
 
-            {/* Mobile carousel controls */}
-            <div className="mobile-carousel-controls-container mt-8 block lg:hidden">
+    {/* Mobile carousel controls */ }
+    {/* <div className="mobile-carousel-controls-container mt-8 block lg:hidden">
                 <div className="container site-grid">
                     <div className="col col-span-12">
                         <button
@@ -421,8 +422,8 @@ export const CardsTeamSection: React.FC = () => {
                         </button>
                     </div>
                 </div>
-            </div>
-        </section>
+            </div> */}
+        </section >
     );
 };
 
