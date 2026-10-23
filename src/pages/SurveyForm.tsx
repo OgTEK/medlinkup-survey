@@ -9,7 +9,7 @@ import {
 } from '../survey/questions';
 import { submitResponse } from '../lib/api';
 import { deviceId, store } from '../lib/storage';
-import '../styles_.css'
+import '../app-pages.css';
 
 interface Props {
   onIneligible: () => void;
@@ -91,6 +91,7 @@ export default function SurveyForm({ onIneligible, onDone }: Props) {
   };
 
   return (
+    <div className="app-page">
     <main className="card">
       <div className="progress" role="progressbar" aria-valuemin={1} aria-valuemax={SECTIONS.length} aria-valuenow={step + 1}>
         <div style={{ width: `${((step + 1) / SECTIONS.length) * 100}%` }} />
@@ -143,6 +144,7 @@ export default function SurveyForm({ onIneligible, onDone }: Props) {
         )}
       </div>
     </main>
+    </div>
   );
 }
 

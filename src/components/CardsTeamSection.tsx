@@ -270,6 +270,7 @@ export const CardsTeamSection: React.FC = () => {
 
     return (
         <section
+            id="why-medlinkup"
             className="bg-warm-white block-padding cards-team-block"
             style={{
                 "--block-pt-mob": "98px",
@@ -293,7 +294,7 @@ export const CardsTeamSection: React.FC = () => {
 
                     <div className="col-span-full lg:col-span-6 xl:col-span-9">
                         <div className="description-container mb-4">
-                            <div className="wysiwyg wysiwyg-module__b8MwUq__wysiwyg body cap-trim">
+                            <div className="wysiwyg wysiwyg-module__b8MwUq__wysiwyg body section-copy">
                                 <p>
                                     You leave a consultation with a scan request and a referral. <br />Then the questions begin.<br />
                                     Where should you get the scan? Who explains the results? <br />Which specialist do you see next? Will they know what your previous doctor recommended?

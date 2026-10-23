@@ -442,7 +442,7 @@ const ScrollFill: React.FC<{ text: string }> = ({ text }) => (
     <p className="sr-only">{text}</p>
     <p
       aria-hidden="true"
-      className="scroll-fill-notrim h6 text-warm-white leading-[1.45] max-w-[48ch]"
+      className="scroll-fill-notrim h6 section-copy text-warm-white max-w-[48ch]"
     >
       {text.split(" ").map((word, w, words) => (
         <React.Fragment key={w}>
@@ -468,7 +468,7 @@ const ScrollFill: React.FC<{ text: string }> = ({ text }) => (
 /*  COMPONENT                                                                 */
 /* -------------------------------------------------------------------------- */
 
-export const Hero: React.FC<HeroProps> = ({ onOpenEarlyAccess }) => {
+export const Hero: React.FC<HeroProps> = () => {
   const [earlyAccessOpen, setEarlyAccessOpen] = useState(false);
 
   const sectionRef = useRef<HTMLElement>(null);
@@ -478,7 +478,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEarlyAccess }) => {
 
   const handleOpenEarlyAccess = () => {
     setEarlyAccessOpen(true);
-    onOpenEarlyAccess?.();
   };
 
   useEffect(() => {
@@ -599,6 +598,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEarlyAccess }) => {
          font size is smaller on narrow screens so it doesn't overflow.
     */
     <section
+      id="early-access"
       ref={sectionRef}
       data-header-scheme="light"
       className="relative w-full text-warm-white"
@@ -665,7 +665,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEarlyAccess }) => {
             ))}
           </h1>
 
-          <p className="hero-sub body cap-trim max-w-[36ch] text-warm-white leading-relaxed">
+          <p className="hero-sub body section-copy max-w-[36ch] text-warm-white">
             {SUBTITLE}
           </p>
         </div>

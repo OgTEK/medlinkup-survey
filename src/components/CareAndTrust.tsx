@@ -293,7 +293,7 @@ export const CardsTeamSection: React.FC = () => {
 
           <div className="col-span-full lg:col-span-6 xl:col-span-9">
             <div className="description-container mb-4">
-              <div className="wysiwyg wysiwyg-module__b8MwUq__wysiwyg body cap-trim">
+              <div className="wysiwyg wysiwyg-module__b8MwUq__wysiwyg body section-copy">
                 <p>
                   Trust starts with knowing who is providing your care. We’re engaging healthcare professionals as we develop MedLinkup. Before joining the platform, participating professionals will undergo professional registration and credential checks.
                   <br /><br />Your health information deserves the same level of care. We’re building MedLinkup with privacy and security in mind, guided by the Nigeria Data Protection Act 2023 and other applicable requirements.

@@ -48,7 +48,7 @@ const POSTS: Post[] = [
     {
         // href: "/journal/behind-the-build-the-campus-in-the-sky",
         title: "Explore your care options",
-        description: 'Start with a guided check-in about your health concerns and goals, or go straight to requesting an individual consultation.',
+        description: 'Connect with qualified healthcare professionals and understand the services available to you, from a single appointment to a personalised care programme, including mental health support where needed.',
 
         number: "02",
         image: "https://images.unsplash.com/photo-1740479050151-5d26c764403e?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
@@ -67,7 +67,7 @@ const POSTS: Post[] = [
         image:
             "https://images.unsplash.com/photo-1758691462430-81160850496c?q=80&w=3840&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
         imageRatio: "680 / 453",
-        imageAlt: "Behind the Build: Meet Abi Munslow",
+        imageAlt: "Staying connected to ongoing care",
         hoverClass: "hover:bg-cream",
         desktopSpan: "lg:col-span-4 xl:col-span-6",
         desktopSizes:
@@ -186,7 +186,7 @@ function PostCard({ post, sizes }: { post: Post; sizes: string }) {
             <div className="flex flex-col gap-[16px] px-[10px]">
                 <DatePills date={post.number} />
                 <h2 className="body-large text-warm-black">{post.title}</h2>
-                <h3 className="body-large text-warm-black">{post.description}</h3>
+                <h3 className="section-copy text-warm-black">{post.description}</h3>
 
             </div>
         </a>
@@ -255,6 +255,7 @@ export default function JournalSection() {
 
     return (
         <section
+            id="how-it-works"
             className="bg-warm-white block-padding"
             style={
                 {

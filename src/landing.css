@@ -1,0 +1,55 @@
+/* Unlayered on purpose so these beat the precompiled .body / logo utilities. */
+
+.nav-logo {
+  display: block;
+  height: 22px;
+  width: auto;
+}
+
+.footer-logo {
+  display: block;
+  height: 26px;
+  width: auto;
+}
+
+.footer-logo-row {
+  align-items: center;
+  height: auto;
+  padding-top: 28px;
+  padding-bottom: 28px;
+}
+
+.section-copy,
+.section-copy.body,
+.body.section-copy,
+.wysiwyg.section-copy,
+.wysiwyg.section-copy p,
+p.section-copy,
+h3.section-copy {
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: -0.011em;
+  text-box: normal;
+  text-box-trim: none;
+  text-box-edge: auto;
+}
+
+@media (min-width: 1024px) {
+  .nav-logo {
+    height: 36px;
+  }
+
+  .footer-logo {
+    height: 40px;
+  }
+
+  .footer-copy-offset {
+    padding-left: 248px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .footer-copy-offset {
+    padding-left: 280px;
+  }
+}

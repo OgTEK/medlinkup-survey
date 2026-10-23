@@ -116,7 +116,7 @@ export const TheProblem: React.FC = () => {
   }, [reduceMotion, sectionRef]);
 
   return (
-    <section id="why-medlinkup" ref={sectionRef} className="border-b border-stone-200/70">
+    <section id="our-approach" ref={sectionRef} className="border-b border-stone-200/70">
       {/* ---------- Intro (light) ---------- */}
 
       {/* ---------- The four questions ---------- */}
@@ -277,7 +277,7 @@ export const TheProblem: React.FC = () => {
                         className="problem-text project-quote-container col-start-1 row-start-1"
                         style={{ opacity: i === 0 ? 1 : 0 }}
                       >
-                        <p className="quote-contents text-warm-white lg:body xl:body-large">{item.detail}</p>
+                        <p className="quote-contents section-copy text-warm-white lg:body xl:body-large">{item.detail}</p>
                       </div>
                     ))}
                   </div>

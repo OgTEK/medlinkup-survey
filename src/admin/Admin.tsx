@@ -5,6 +5,7 @@ import { QUESTIONS, columnName } from '../../shared/questions';
 import type { AdminData, ResponseView } from '../../shared/types';
 import { barConfig } from './charts';
 import { exportExcel } from './exportExcel';
+import '../app-pages.css';
 
 const KEY = 'mlu_admin';
 const getPw = () => { try { return sessionStorage.getItem(KEY) ?? ''; } catch { return ''; } };
@@ -43,6 +44,7 @@ export default function Admin() {
 
   if (!password || !data) {
     return (
+      <div className="app-page">
       <div className="shell narrow">
         <section className="card stack">
           <h1>Admin</h1>
@@ -53,6 +55,7 @@ export default function Admin() {
           </form>
           {error && <p className="error" role="alert">{error}</p>}
         </section>
+      </div>
       </div>
     );
   }
@@ -66,6 +69,7 @@ export default function Admin() {
   const flagged = data.responses.filter((r) => r.flag).length;
 
   return (
+    <div className="app-page">
     <div className="shell wide">
       <header className="admin-head">
         <div>
@@ -98,6 +102,7 @@ export default function Admin() {
       {tab === 'responses' && <Responses rows={data.responses} />}
       {tab === 'analysis' && <Analysis rows={data.responses} />}
       {tab === 'referrals' && <Leaderboard data={data} />}
+    </div>
     </div>
   );
 }

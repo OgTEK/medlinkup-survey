@@ -60,7 +60,7 @@ export const FounderStory: React.FC = () => {
               </h2>
             </div> */}
 
-            <div className="space-y-5 text-base sm:text-lg text-stone-700 font-normal leading-relaxed">
+            <div className="section-copy space-y-5 text-base text-stone-700 sm:text-lg">
               {/* <p>
                 One Sunday, a friend of mine developed severe leg pain and could barely walk. Finding an available orthopaedic specialist was far more difficult than I expected.
               </p>

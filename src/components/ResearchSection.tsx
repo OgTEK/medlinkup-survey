@@ -116,13 +116,13 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({
 
             {/* Right: copy + CTA */}
             <div className="col-span-full flex flex-col gap-6 lg:col-span-6 lg:col-start-7 xl:col-span-12 xl:col-start-[13]">
-              <p className="body-large" style={{ color: PANEL_TEXT }}>
+              <p className="section-copy" style={{ color: PANEL_TEXT }}>
                 {LEAD}
               </p>
-              <p className="body" style={{ color: MUTED }}>
+              <p className="section-copy" style={{ color: MUTED }}>
                 {BODY}
               </p>
-              <p className="body" style={{ color: ACCENT }}>
+              <p className="section-copy" style={{ color: ACCENT }}>
                 {HIGHLIGHT}
               </p>
 
@@ -160,7 +160,7 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({
 
           {/* Footer: ethics & privacy note */}
           <div
-            className="body-small"
+            className="section-copy"
             style={{
               marginTop: "clamp(32px, 5vw, 56px)",
               paddingTop: 24,

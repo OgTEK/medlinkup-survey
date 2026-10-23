@@ -227,7 +227,7 @@ export default function InGoodCompanySection() {
               {TITLE}
             </h2>
             <div>
-              <p className="max-w-[345px] body text-warm-black lg:max-w-[390px] xl:max-w-[506px]">
+              <p className="section-copy max-w-[345px] body text-warm-black lg:max-w-[390px] xl:max-w-[506px]">
                 {/* {BODY} */}
                   Starting with women. Thinking beyond one appointment.<br/><br/>Women's healthcare needs change throughout life. Some concerns need a single consultation. Others call for investigations, specialist care, mental health support or ongoing attention.<br/> We're starting with women in Nigeria because we believe these experiences can be much easier to access and navigate. We're not building for one condition or one stage of life.<br/><br/> Our long-term vision goes further: healthcare that is accessible, connected, personal and continuous, so people get the care and support they need throughout their health journeys.
 

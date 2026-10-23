@@ -5,6 +5,7 @@ import App from './App';
 import Admin from './admin/Admin';
 import LandingPage from './pages/LandingPage';
 import './styles.css';
+import './landing.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
