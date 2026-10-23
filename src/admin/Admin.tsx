@@ -212,7 +212,7 @@ function Leaderboard({ data }: { data: AdminData }) {
   return (
     <section className="card">
       <p className="muted small">
-        Ranked by valid referrals; ties go to whoever reached the number first. Not counted = self-referral, duplicate device, completed too quickly, or unknown code.
+        Ranked by valid referrals; ties go to whoever reached the number first. Not counted = self-referral, duplicate device, or unknown code.
       </p>
       <div className="table-wrap">
         <table>

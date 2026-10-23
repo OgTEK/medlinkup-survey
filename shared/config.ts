@@ -1,8 +1,11 @@
 export const config = {
   org: 'Medlinkup',
   title: 'Understanding Healthcare Experiences Among Nigerian Women',
-  /** Responses completed faster than this are flagged and don't count as a valid referral. */
-  minDurationSeconds: 90,
+  /**
+   * Responses completed faster than this are flagged and don't count as a valid referral.
+   * A real response can be finished in 30 seconds or less, so those are not flagged.
+   */
+  minDurationSeconds: 0,
   /** Edit these to match the real prize / rules. */
   gift: 'a gift from Medlinkup',
   contestClosing: 'when Medlinkup announces that the survey has closed',

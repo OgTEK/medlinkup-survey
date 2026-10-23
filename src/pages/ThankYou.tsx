@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export default function ThankYou({ code }: { code: string }) {
   const [copied, setCopied] = useState(false);
-  const link = `${window.location.origin}/?ref=${code}`;
+  const link = `${window.location.origin}/survey?ref=${code}`;
   const message = `I just shared my healthcare experience in a short survey by Medlinkup for Nigerian women (8–10 mins). Please take part too: ${link}`;
 
   const copy = async () => {

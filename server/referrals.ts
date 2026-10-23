@@ -8,7 +8,8 @@ import type { LeaderboardRow, ResponseView, StoredResponse } from '../shared/typ
  *  - used a referral code that belongs to an existing respondent,
  *  - came from a different device than the referrer,
  *  - is the first completed response from that device,
- *  - took at least `minDurationSeconds` to complete.
+ *  - was not completed faster than `minDurationSeconds` (0 disables the speed check;
+ *    a genuine survey can be finished in 30 seconds or less).
  */
 export function evaluate(responses: StoredResponse[]): { views: ResponseView[]; leaderboard: LeaderboardRow[] } {
   const sorted = [...responses].sort((a, b) => a.submittedAt.localeCompare(b.submittedAt));

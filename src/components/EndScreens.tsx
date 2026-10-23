@@ -16,7 +16,7 @@ export function Ineligible() {
 
 export function ThankYou({ code }: { code: string }) {
   const [copied, setCopied] = useState(false);
-  const link = `${window.location.origin}/?ref=${code}`;
+  const link = `${window.location.origin}/survey?ref=${code}`;
   const message = `Hi! I just took part in a short, anonymous survey about women's healthcare experiences in Nigeria by ${config.org}. It takes about 8–10 minutes: ${link}`;
 
   const copy = async () => {
