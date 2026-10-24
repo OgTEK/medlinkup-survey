@@ -84,8 +84,10 @@ app.get('/api/admin/data', requireAdmin, async (_req: Request, res: Response) =>
 });
 
 /* ------------------- serve the built site in production ------------------- */
+// ROLLBACK: remove `!process.env.VERCEL &&` so Express serves dist/ again on every host.
+// On Vercel the static site is served separately, and this disk does not persist.
 const dist = path.resolve('dist');
-if (fs.existsSync(dist)) {
+if (!process.env.VERCEL && fs.existsSync(dist)) {
   app.use(express.static(dist));
   app.use((req: Request, res: Response, next: NextFunction) => {
     if (req.method === 'GET' && !req.path.startsWith('/api')) return res.sendFile(path.join(dist, 'index.html'));
@@ -93,7 +95,14 @@ if (fs.existsSync(dist)) {
   });
 }
 
-const port = Number(process.env.PORT ?? 3001);
-app.listen(port, () => {
-  console.log(`API on http://localhost:${port}  ·  storage: ${store.kind}${ADMIN_PASSWORD ? '' : '  ·  ADMIN DISABLED (no ADMIN_PASSWORD)'}`);
-});
+// ROLLBACK: delete this export and the `if (!process.env.VERCEL)` wrapper, then call
+// app.listen unconditionally again (the original end of this file).
+export default app;
+
+// Vercel imports this file as a function and sets VERCEL=1. Listening there would crash.
+if (!process.env.VERCEL) {
+  const port = Number(process.env.PORT ?? 3001);
+  app.listen(port, () => {
+    console.log(`API on http://localhost:${port}  ·  storage: ${store.kind}${ADMIN_PASSWORD ? '' : '  ·  ADMIN DISABLED (no ADMIN_PASSWORD)'}`);
+  });
+}
